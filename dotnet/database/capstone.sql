@@ -24,8 +24,24 @@ CREATE TABLE users (
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 )
 
+CREATE TABLE decks (
+	deck_id int IDENTITY(1,1) NOT NULL,
+	deck_title varchar(100) NOT NULL,
+	deck_tags varchar(50) NOT NULL,
+	deck_desc varchar(200) NOT NULL,
+	user_id int NOT NULL,
+)
+
 --populate default data
 INSERT INTO users (username, password_hash, salt, user_role) VALUES ('user','Jg45HuwT7PZkfuKTz6IB90CtWY4=','LHxP4Xh7bN0=','user');
 INSERT INTO users (username, password_hash, salt, user_role) VALUES ('admin','YhyGVQ+Ch69n4JMBncM4lNF/i9s=', 'Ar/aB2thQTI=','admin');
+
+--temp deck
+
+INSERT INTO decks (deck_title, deck_tags, deck_desc, user_id) 
+	VALUES ('Spanish greetings', 'Spanish', 'learn Spanish greetings with Sara', 1)
+--foreign key constraints
+
+ALTER TABLE decks ADD CONSTRAINT user_id_FK FOREIGN KEY (user_id) REFERENCES users(user_id);
 
 GO
