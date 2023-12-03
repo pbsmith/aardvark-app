@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Capstone.DAO;
 using Capstone.Exceptions;
 using Capstone.Models;
 using Capstone.Security;
+using Capstone.DAO.Interface;
 
 namespace Capstone.Controllers
 {
@@ -19,6 +19,13 @@ namespace Capstone.Controllers
             this.tokenGenerator = tokenGenerator;
             this.passwordHasher = passwordHasher;
             this.userDao = userDao;
+        }
+
+        [HttpGet("/")]
+        public ActionResult<string> Ready()
+        {
+            int userCount = userDao.GetUsers().Count;
+            return Ok($"Server is ready with {userCount} user(s).");
         }
 
         [HttpPost]
