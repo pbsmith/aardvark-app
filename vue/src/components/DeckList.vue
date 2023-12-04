@@ -1,9 +1,16 @@
 <template>
-    <div class="deck" v-for="deck in decks" :key="deck.id"></div>
+    <div class="deck">
+        <DeckDetails v-for="deck in decks" v-bind:key="deck.deckId" v-bind:deck="deck"/>
+    </div>
 </template>
 
 <script>
+import DeckDetails from './DeckDetails.vue';
+
 export default{
+    components: {
+        DeckDetails
+    },
     props:{
         decks:{
             type: Array,
@@ -12,3 +19,10 @@ export default{
     }
 };
 </script>
+
+<style>
+    .deck {
+        display: flex;
+        justify-content: space-evenly;
+    }
+</style>
