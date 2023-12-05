@@ -39,7 +39,10 @@ INSERT INTO users (username, password_hash, salt, user_role) VALUES ('admin','Yh
 --temp deck
 
 INSERT INTO decks (deck_title, deck_tags, deck_desc, user_id) 
-	VALUES ('Spanish greetings', 'Spanish', 'learn Spanish greetings with Sara', 1)
+	VALUES ('Spanish greetings', 'Spanish', 'learn Spanish greetings with Sara', 1),
+	('Brian Facts', 'Brian', 'learn Brian with Pendle', 2),
+	('Somali Food', 'Food', 'learn Somali food with Abdi', 2)
+
 --foreign key constraints
 
 ALTER TABLE decks ADD CONSTRAINT user_id_FK FOREIGN KEY (user_id) REFERENCES users(user_id);

@@ -14,7 +14,7 @@ import deckService from '../services/DeckService.js';
 
 export default {
   components: {
-    DeckList
+    DeckList,
   },
   data() {
     return {

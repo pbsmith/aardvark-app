@@ -10,7 +10,7 @@ namespace Capstone.DAO
     public class DeckSqlDao : IDeckDao
     {
         private readonly string connectionString;
-     
+
 
         public DeckSqlDao(string dbConnectionString)
         {
@@ -45,6 +45,36 @@ namespace Capstone.DAO
             }
 
             return decks;
+        }
+
+        public Deck createDeck(Deck deck)
+        {
+
+            string sql = "INSERT INTO decks (deck_title, deck_tags, deck_desc, user_id) " +
+                "OUTPUT INSERTED.deck_id " +
+                "VALUES (@deck_title, @deck_tags, @deck_desc, @user_id)";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@deck_title", deck.deckTitle);
+                        cmd.Parameters.AddWithValue("@deck_tags", deck.deckTags);
+                        cmd.Parameters.AddWithValue("@deck_desc", deck.deckDesc);
+                        cmd.Parameters.AddWithValue("@user_id", deck.userId);
+
+                        deck.deckId = (int)cmd.ExecuteScalar();
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new DaoException("SQL exception occurred", ex);
+            }
+
+            return deck;
         }
 
         private Deck MapRowToDeck(SqlDataReader reader)

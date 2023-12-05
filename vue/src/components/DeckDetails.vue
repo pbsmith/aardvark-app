@@ -19,7 +19,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .deckcontainer {
         padding: 2vh;
         border: 0.2rem solid black;

@@ -6,6 +6,7 @@ namespace Capstone.DAO.Interface
     public interface IDeckDao
     {
         List<Deck> GetDecks();
+        Deck createDeck(Deck deck);
 
     }
 }

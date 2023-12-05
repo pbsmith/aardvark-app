@@ -1,15 +1,26 @@
 <template>
   <div id="capstone-app">
-    <div id="nav">
-      <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-    </div>
+    <nav>
+      <NavHeader />
+    </nav>
+    
     <router-view />
   </div>
 </template>
+
+<script>
+import NavHeader from './components/NavHeader.vue';
+
+export default {
+  components: {
+    NavHeader
+  }
+}
+</script>
 
 <style>
   * {
     background-color: #99cced;
   }
+
 </style>

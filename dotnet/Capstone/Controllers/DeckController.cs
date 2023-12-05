@@ -22,5 +22,12 @@ namespace Capstone.Controllers
         {
             return Ok(dao.GetDecks());
         }
+
+        [HttpPost()]
+        public ActionResult<Deck> CreateDeck(Deck deck)
+        {
+            Deck added = dao.createDeck(deck);
+            return Created($"/deck/{added.deckId}", added);
+        }
     }
 }
