@@ -4,12 +4,7 @@
   </div>
   <div v-else>
     <h1>Flashcard Decks</h1>
-    <router-link v-bind:to="{
-        name: 'deck', 
-        params: { deckId: deck.deckId }
-      }">
       <DeckList v-bind:decks="decks" />
-    </router-link>
   </div>
 </template>
 

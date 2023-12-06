@@ -1,19 +1,16 @@
 <template>
-    <div class="container">
+    <div class="card-container">
         <form v-on:submit.prevent="submitForm" class="card-form">
             <h1>Create a New Card</h1>
             <div class="field">
                 <label for="term">Term</label>
-                <input type="text" id="term" name="term" v-model="newCard.cardTerm">
+                <input type="text" id="term" name="term" v-model="newCard.term">
             </div>
             <div class="field">
-                <label for="definition">Term</label>
-                <input type="text" id="definition" name="definition" v-model="newCard.cardDefinition">
+                <label for="definition">Definition</label>
+                <input type="text" id="definition" name="definition" v-model="newCard.definition">
             </div>
-            <div class="field">
-                <label for="tags">Term</label>
-                <input type="text" id="tags" name="tags" v-model="newCard.cardTags">
-            </div>
+            <button type="submit" value="Save">Save</button>
         </form>
     </div>
 </template>
@@ -33,9 +30,8 @@ export default{
             newCard: {
                 cardId: this.card.cardId,
                 deckId: this.card.deckId,
-                cardTerm: this.card.cardTerm,
-                cardDefinition: this.card.cardDefinition,
-                cardTags: this.card.cardTags,
+                term: this.card.term,
+                definition: this.card.definition,
                 userId: this.card.userId
             }
         };
@@ -45,7 +41,7 @@ export default{
             if (!this.validateForm()) {
                 return;
             }
-            if (this.newDeck.deckId === 0) {
+            if (this.newCard.cardId === 0) {
                 CardService
                     .createCard(this.newCard)
                     .then(response => {
@@ -58,8 +54,7 @@ export default{
                                 }
                             );
                             this.$router.push({
-                                //change to deck view
-                                name: 'home',
+                                name: 'deck-detail',
                             });
                         }
                     })
@@ -83,14 +78,11 @@ export default{
         },
         validateForm() {
             let msg = '';
-            if (this.newDeck.deckTitle.length === 0) {
+            if (this.newCard.term.length === 0) {
                 msg += 'The new card must have a title. ';
             }
-            if (this.newDeck.deckDesc.length === 0) {
+            if (this.newCard.definition.length === 0) {
                 msg += 'The new card must have a Description.';
-            }
-            if (this.newDeck.deckTags.length === 0) {
-                msg += 'The new card must have a Tags.';
             }
             if (msg.length > 0) {
                 this.$store.commit('SET_NOTIFICATION', msg);

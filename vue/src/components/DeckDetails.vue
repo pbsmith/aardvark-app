@@ -11,17 +11,16 @@
 </template>
 
 <script>
-    import deckService from "../services/DeckService.js";
 
-    export default {
-        props:
-            ['deck']
-    }
+export default {
+    props:
+        ['deck']
+}
 </script>
 
 <style scoped>
-    .deckcontainer {
-        padding: 2vh;
-        border: 0.2rem solid black;
-    }
+.deckcontainer {
+    padding: 2vh;
+    border: 0.2rem solid black;
+}
 </style>

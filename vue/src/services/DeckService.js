@@ -4,7 +4,11 @@ export default {
 
   getDecks() {
     console.log('Reached getdecks in deck service')
-    return axios.get('/deck');
+    return axios.get('/deck')
+  },
+
+  getDeckById(deckId){
+    return axios.get(`/deck/${deckId}`)
   },
 
   createDeck(deck) {

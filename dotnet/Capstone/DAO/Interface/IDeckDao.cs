@@ -7,7 +7,7 @@ namespace Capstone.DAO.Interface
     {
         List<Deck> GetDecks();
         Deck createDeck(Deck deck);
-     
+        Deck GetDeckById(int deckId);
 
     }
 }

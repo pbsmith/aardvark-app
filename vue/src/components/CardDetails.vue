@@ -1,15 +1,13 @@
 <template>
     <div class="cardcontainer">
         <div>
-            <p>{{ card.cardTerm }}</p>
-            <p>{{ card.cardDefinition }}</p>
-            <p>{{ card.cardTags }}</p>
+            <p>{{ card.term }}</p>
+            <p>{{ card.definition }}</p>
         </div>
     </div>
 </template>
 
 <script>
-import CardService from '../services/CardService';
 
 export default {
     props:
