@@ -80,12 +80,14 @@ export default {
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+  
 }
 .register-form {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 120vw;
 }
 form {
   background-color: #fff;

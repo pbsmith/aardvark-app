@@ -2,6 +2,7 @@
     <div id="nav-bar"> <!-- logo/home, search bar, add plus sign, login, register -->
         <div id="logo" >
             <router-link v-bind:to="{ name: 'home' }">
+                <img src="../imgs/Aardvark.jpg" class="logo">
                 <h1>Aardvark</h1><!-- todo: replace with image -->
             </router-link>
         </div>
@@ -59,7 +60,19 @@ div#nav-bar {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     font-family: "Poppins", sans-serif;
     margin-right: 50px;
+    position: relative;
+    padding-left: 62px;
 }
+
+.logo{
+    background-color: #cb997e;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    left: 0%;
+    padding-top: 8px;
+}
+
 
 
 /* other styling */
@@ -76,12 +89,15 @@ div#nav-bar {
 }
 
 .search-bar{
-    border-radius: 1vh;
-    width: 30vw;
-    height: 4.8vh;
+    border-radius: 0.7vh;
+    width: 40vw;
+    height: 5vh;
     border: 1px solid black;
     padding-left: 10px;
     margin-right: 230px;
+    background-color: wheat;
+    font-weight: bold;
+    font-size: 17px;
 }
 .addBtn{
     margin-left: 200px;

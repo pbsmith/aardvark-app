@@ -70,6 +70,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 120vw;
 }
 form {
   background-color: #fff;

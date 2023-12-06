@@ -19,7 +19,7 @@ export default {
 
 <style >
   body{
-    background-color: darkcyan;
+    background-color: rgba(92, 140, 140, 0.527);
   }
   nav{
     margin-bottom: 12vh;
