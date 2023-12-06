@@ -10,23 +10,27 @@ namespace Capstone.Controllers
     [ApiController]
     public class DeckController : ControllerBase
     {
-        public IDeckDao dao;
+        public IDeckDao deckDao;
+        public IUserDao userDao;
 
-        public DeckController(IDeckDao deckDao)
+        public DeckController(IDeckDao deckDao, IUserDao userDao)
         {
-            dao = deckDao;
+            this.deckDao = deckDao;
+            this.userDao = userDao;
         }
 
         [HttpGet()]
         public ActionResult<IList<Deck>> GetDecks()
         {
-            return Ok(dao.GetDecks());
+            return Ok(deckDao.GetDecks());
         }
 
         [HttpPost()]
         public ActionResult<Deck> CreateDeck(Deck deck)
         {
-            Deck added = dao.createDeck(deck);
+            User user = userDao.GetUserByUsername(User.Identity.Name);
+            deck.userId = user.UserId;           
+            Deck added = deckDao.createDeck(deck);
             return Created($"/deck/{added.deckId}", added);
         }
     }

@@ -49,7 +49,6 @@ namespace Capstone.DAO
 
         public Deck createDeck(Deck deck)
         {
-
             string sql = "INSERT INTO decks (deck_title, deck_tags, deck_desc, user_id) " +
                 "OUTPUT INSERTED.deck_id " +
                 "VALUES (@deck_title, @deck_tags, @deck_desc, @user_id)";

@@ -1,6 +1,6 @@
 <template>
     <div class="deck">
-        <DeckDetails v-for="deck in decks" v-bind:key="deck.deckId" v-bind:deck="deck"/>
+        <DeckDetails v-for="deck in decks" v-bind:key="deck.deckId" v-bind:deck="deck" class="modify-deck"/>
     </div>
 </template>
 
@@ -24,5 +24,10 @@ export default{
     .deck {
         display: flex;
         justify-content: space-evenly;
+    }
+    .modify-deck{
+        min-width: 150px;
+        min-height: 50px;
+        text-align: center;
     }
 </style>

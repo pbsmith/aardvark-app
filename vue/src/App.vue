@@ -3,8 +3,7 @@
     <nav>
       <NavHeader />
     </nav>
-    
-    <router-view />
+    <router-view id="view"/>
   </div>
 </template>
 
@@ -18,9 +17,9 @@ export default {
 }
 </script>
 
-<style>
-  * {
-    background-color: #99cced;
+<style >
+  nav{
+    margin-bottom: 12vh;
+    
   }
-
 </style>

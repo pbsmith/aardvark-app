@@ -1,25 +1,27 @@
 <template>
     <div id="nav-bar"> <!-- logo/home, search bar, add plus sign, login, register -->
-        <div id="logo" class="navElement">
+        <div id="logo" >
             <router-link v-bind:to="{ name: 'home' }">
                 <h1>Aardvark</h1><!-- todo: replace with image -->
             </router-link>
         </div>
-        <div id="search-bar" class="navElement">
+        <div id="search-bar" >
             <input class="search-bar" type="text" placeholder="Search">
         </div>
-        <div id="add-button" class="navElement">
-            <button>
-                +
+        <div id="add-button" >
+            <button class="addBtn">
+                <router-link v-bind:to="{ name: 'newdeck' }">
+                    <img src="../imgs/addform.svg" width="24" height="24">
+                </router-link>
             </button>
         </div>
-        <div id="login" class="navElement">
+        <div id="login" >
             <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
 
             <router-link v-bind:to="{ name: 'login' }" v-else>
                 Login</router-link>
         </div>
-        <div id="register" class="navElement">
+        <div id="register" >
             <router-link v-bind:to="{ name: 'register' }">
                 Sign Up</router-link>
         </div>
@@ -27,69 +29,69 @@
 </template>
 
 <script>
+import '@fortawesome/fontawesome-free/css/all.css';
 export default {
 }
 </script>
 
 <style scoped>
-/* grid setup */
-#nav-bar {
-    width: 100vw;
-    align-items: center;
-    justify-items: center;
-    position: fixed;
-    left: 0;
-    top: 0;
-    grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
-    display: grid;
-    grid-template-areas:
-        "logo search-bar add-button login register";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
+/* grid setup */
+div#nav-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1px 15px 1px 20px;
+    display: flex;  
+    align-items: center;
+    transition: 0.3s ease-out;
+    background-color: #cb997e;
 }
 
 #logo {
     grid-area: logo;
-    padding-left: 3vw;
-    padding-right: 3vw;
+    font-size: 14px;
+    font-weight: bold;
+    color: #3498db; 
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    font-family: "Poppins", sans-serif;
+    margin-right: 50px;
 }
 
-#search-bar {
-    grid-area: search-bar;
-}
-
-#add-button {
-    grid-area: add-button;
-}
-
-#login {
-    grid-area: login;
-}
-
-#register {
-    grid-area: register;
-}
 
 /* other styling */
 
 #login,
 #register {
-    padding: 0.7vh;
+    padding: 1.3vh;
     border: 0.05rem solid black;
     border-radius: 1vh;
-    font-size: medium;
+    font-size: large;
+    margin-left: 20px;
+    background-color: #cb997e;
 
 }
 
 .search-bar{
     border-radius: 1vh;
     width: 30vw;
+    height: 4.8vh;
+    border: 1px solid black;
+    padding-left: 10px;
+    margin-right: 230px;
 }
-
+.addBtn{
+    margin-left: 200px;
+    margin-right: 10px;
+    border-radius: 5px;
+    padding-top: 2px;
+}
 a {
     text-decoration: none;
 }
 
-* {
-    background-color: #9C89FF;
-}
 </style>
