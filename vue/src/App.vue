@@ -18,8 +18,10 @@ export default {
 </script>
 
 <style >
+  body{
+    background-color: darkcyan;
+  }
   nav{
     margin-bottom: 12vh;
-    
   }
 </style>
