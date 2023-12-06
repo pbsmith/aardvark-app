@@ -30,6 +30,16 @@ CREATE TABLE decks (
 	deck_tags varchar(50) NOT NULL,
 	deck_desc varchar(200) NOT NULL,
 	user_id int NOT NULL,
+	CONSTRAINT PK_deck PRIMARY KEY (deck_id)
+)
+
+CREATE TABLE cards (
+	card_id int IDENTITY(1,1) NOT NULL,
+	deck_id int NOT NULL,
+	term varchar(20) NOT NULL,
+	definition varchar(300) NOT NULL,
+	user_id int NOT NULL
+	CONSTRAINT PK_card PRIMARY KEY (card_id)
 )
 
 --populate default data
@@ -45,6 +55,8 @@ INSERT INTO decks (deck_title, deck_tags, deck_desc, user_id)
 
 --foreign key constraints
 
-ALTER TABLE decks ADD CONSTRAINT user_id_FK FOREIGN KEY (user_id) REFERENCES users(user_id);
+ALTER TABLE decks ADD CONSTRAINT user_id_FK_on_decks FOREIGN KEY (user_id) REFERENCES users(user_id);
+ALTER TABLE cards ADD CONSTRAINT user_id_FK_on_cards FOREIGN KEY (user_id) REFERENCES users(user_id);
+ALTER TABLE cards ADD CONSTRAINT deck_id_FK FOREIGN KEY (deck_id) REFERENCES decks(deck_id);
 
 GO
