@@ -46,7 +46,7 @@ div#nav-bar {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 97.8%;
     padding: 10px 15px 10px 20px; 
     align-items: center;
     background-color: #fff;
