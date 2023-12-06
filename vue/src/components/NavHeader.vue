@@ -39,18 +39,20 @@ export default {
 
 /* grid setup */
 div#nav-bar {
+    display: grid; 
+    grid-template-columns: 1fr 3fr 0.4fr;
+    grid-template-areas: 
+    "imglogo logo searchbar addformBtn login register";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 1px 15px 1px 20px;
-    display: flex;  
+    padding: 10px 15px 10px 20px; 
     align-items: center;
-    transition: 0.3s ease-out;
-    background-color: #cb997e;
+    background-color: #fff;
 }
 
-#logo {
+h1 {
     grid-area: logo;
     font-size: 14px;
     font-weight: bold;
@@ -59,48 +61,56 @@ div#nav-bar {
     letter-spacing: 4px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     font-family: "Poppins", sans-serif;
-    margin-right: 50px;
     position: relative;
-    padding-left: 62px;
+    padding-left: 60px;
 }
 
 .logo{
+    grid-area: imglogo;
     background-color: #cb997e;
     position: absolute;
-    width: 50px;
+    width: 60px;
     height: 50px;
-    left: 0%;
-    padding-top: 8px;
 }
 
 
 
 /* other styling */
 
-#login,
-#register {
+#login {
+    grid-area: login;
     padding: 1.3vh;
-    border: 0.05rem solid black;
+    border: 0.12rem solid black;
     border-radius: 1vh;
     font-size: large;
     margin-left: 20px;
-    background-color: #cb997e;
-
+    background-color: wheat; 
+    color: #3498db;
+}
+#register {
+    grid-area: register;
+    padding: 1.3vh;
+    border: 0.12rem solid black;
+    border-radius: 1vh;
+    font-size: large;
+    margin-left: 20px;
+    background-color: wheat; 
+    color: #3498db;
 }
 
 .search-bar{
+    grid-area: searchbar;
     border-radius: 0.7vh;
     width: 40vw;
     height: 5vh;
     border: 1px solid black;
-    padding-left: 10px;
-    margin-right: 230px;
     background-color: wheat;
     font-weight: bold;
     font-size: 17px;
 }
 .addBtn{
-    margin-left: 200px;
+    grid-area: addformBtn;
+    margin-left: 150px;
     margin-right: 10px;
     border-radius: 5px;
     padding-top: 2px;
