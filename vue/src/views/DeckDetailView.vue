@@ -6,17 +6,25 @@
     <button v-if="isFormDisplayed" v-on:click="cancelForm">Cancel</button>
     <CardForm v-if="isFormDisplayed" v-bind:card="card"/>
     <!--add view of all cards-->
+    <div class="card-container">
+        <CardDetails v-for="currentCard in cards" v-bind:key="currentCard.cardId" v-bind:currentCard="currentCard"/>
+    </div>
+    
 </template>
 
 <script>
-import DeckDetails from '../components/DeckDetails.vue';
+import CardService from '../services/CardService.js';
 import DeckService from '../services/DeckService.js';
+
+import CardDetails from '../components/CardDetails.vue';
 import CardForm from '../components/CardForm.vue';
+import DeckDetails from '../components/DeckDetails.vue';
 
 export default {
     data() {
         return {
             deck: {},
+            cards: {},
             card:{
                 cardId: 0,
                 deckId: this.$route.params.deckId,
@@ -30,6 +38,7 @@ export default {
     components: {
         DeckDetails,
         CardForm,
+        CardDetails
     },
     methods: {
         displayForm(){
@@ -47,9 +56,19 @@ export default {
                     this.handleError();
                 })
         },
+        getCards(){
+            CardService.getCardsByDeckId(this.$route.params.deckId)
+                .then(response => {
+                    this.cards = response.data;
+                })
+                .catch(error => {
+                    this.handleError();
+                })
+        }
     },
     created() {
         this.getDeck();
+        this.getCards();
     }
 }
 </script>

@@ -1,8 +1,8 @@
 <template>
     <div class="cardcontainer">
         <div>
-            <p>{{ card.term }}</p>
-            <p>{{ card.definition }}</p>
+            <p>{{ currentCard.term }}</p>
+            <p>{{ currentCard.definition }}</p>
         </div>
     </div>
 </template>
@@ -11,7 +11,7 @@
 
 export default {
     props:
-        ['card']
+        ['currentCard']
 }
 </script>
 

@@ -7,5 +7,7 @@ namespace Capstone.DAO.Interface
     public interface ICardDao
     {
         Card createCard(Card card);
+        List<Card> GetCardsByDeckId(int deckId);
+
     }
 }
