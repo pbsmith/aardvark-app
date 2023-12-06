@@ -1,11 +1,13 @@
 <template>
-    <div class="deck" v-for="deck in decks" v-bind:key="deck.deckId">
+    <div class="decks">
+        <div class="deck" v-for="deck in decks" v-bind:key="deck.deckId">
         <router-link v-bind:to="{
             name: 'deck-detail',
             params: { deckId: deck.deckId }
         }">
             <DeckDetails v-bind:deck="deck" class="modify-deck" />
         </router-link>
+    </div>
     </div>
 </template>
 
@@ -26,9 +28,15 @@ export default {
 </script>
 
 <style scoped>
-.deck {
-    display: flex;
-    justify-content: space-evenly;
+body{
+    height: 100%;
+    width: 100vw;
+}
+.decks {
+display: flex;
+flex-direction: row;
+list-style: none;
+
 }
 
 .modify-deck {

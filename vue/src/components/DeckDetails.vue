@@ -20,6 +20,8 @@ export default {
 
 <style scoped>
 .deckcontainer {
+    display: flex;
+    flex-direction: row;
     padding: 2vh;
     border: 0.2rem solid black;
 }
