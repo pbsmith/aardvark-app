@@ -25,6 +25,21 @@ namespace Capstone.Controllers
             return Ok(deckDao.GetDecks());
         }
 
+        [HttpGet("{deckId}")]
+        public ActionResult<Deck> GetDeckById(int deckId)
+        {
+            Deck deck = deckDao.GetDeckById(deckId);
+            if (deck != null)
+            {
+                return Ok(deck);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
+
         [HttpPost()]
         public ActionResult<Deck> CreateDeck(Deck deck)
         {

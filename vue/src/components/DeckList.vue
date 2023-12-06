@@ -1,18 +1,23 @@
 <template>
-    <div class="deck">
-        <DeckDetails v-for="deck in decks" v-bind:key="deck.deckId" v-bind:deck="deck" class="modify-deck"/>
+    <div class="deck" v-for="deck in decks" v-bind:key="deck.deckId">
+        <router-link v-bind:to="{
+            name: 'deck-detail',
+            params: { deckId: deck.deckId }
+        }">
+            <DeckDetails v-bind:deck="deck" class="modify-deck" />
+        </router-link>
     </div>
 </template>
 
 <script>
 import DeckDetails from './DeckDetails.vue';
 
-export default{
+export default {
     components: {
         DeckDetails
     },
-    props:{
-        decks:{
+    props: {
+        decks: {
             type: Array,
             required: true
         }
@@ -21,13 +26,14 @@ export default{
 </script>
 
 <style scoped>
-    .deck {
-        display: flex;
-        justify-content: space-evenly;
-    }
-    .modify-deck{
-        min-width: 150px;
-        min-height: 50px;
-        text-align: center;
-    }
+.deck {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.modify-deck {
+    min-width: 150px;
+    min-height: 50px;
+    text-align: center;
+}
 </style>
