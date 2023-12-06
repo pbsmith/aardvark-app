@@ -4,7 +4,12 @@
   </div>
   <div v-else>
     <h1>Flashcard Decks</h1>
-    <DeckList v-bind:decks="decks"/>
+    <router-link v-bind:to="{
+        name: 'deck', 
+        params: { deckId: deck.deckId }
+      }">
+      <DeckList v-bind:decks="decks" />
+    </router-link>
   </div>
 </template>
 
@@ -25,20 +30,20 @@ export default {
   methods: {
     getDecks() {
       deckService.getDecks()
-      .then(response => {
-        this.decks = response.data;
-        this.isLoading = false;
-      })
-      .catch(error => {
-        this.handleError();
-      })
-    }, 
+        .then(response => {
+          this.decks = response.data;
+          this.isLoading = false;
+        })
+        .catch(error => {
+          this.handleError();
+        })
+    },
   },
-    created() {
-      console.log('Reached created in home view')
-      this.getDecks();
-    }
-    
+  created() {
+    console.log('Reached created in home view')
+    this.getDecks();
+  }
+
 
 };
 </script>
