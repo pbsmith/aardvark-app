@@ -1,6 +1,7 @@
 ﻿using Capstone.DAO.Interface;
 using Capstone.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Capstone.Controllers
 {
@@ -24,6 +25,13 @@ namespace Capstone.Controllers
             card.userId = user.UserId;
             Card added = cardDao.createCard(card);
             return Created($"/card/{added.cardId}", added);
+        }
+
+        [HttpGet("deck/{deckId}")]
+        public ActionResult<List<Card>> GetCards(int deckId)
+        {
+            List<Card> cards = cardDao.GetCardsByDeckId(deckId);
+            return Ok(cards);
         }
     }
 }

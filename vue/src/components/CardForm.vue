@@ -53,9 +53,7 @@ export default{
                                     type: 'success'
                                 }
                             );
-                            this.$router.push({
-                                name: 'deck-detail',
-                            });
+                            window.location.reload();
                         }
                     })
                     .catch(error => {
