@@ -22,8 +22,10 @@ namespace Capstone.DAO
         {
             List<Card> cards = new List<Card>();
 
-            string sql = "SELECT card_id, deck_id, term, definition, user_id " +
-                "FROM cards WHERE deck_id = @deck_id";
+            string sql = "SELECT cards.card_id, deck_id, term, definition, user_id " +
+                "FROM cards " +
+                "JOIN cardxdeck ON cardxdeck.card_id = cards.card_id " +
+                "WHERE deck_id = @deck_id";
 
             try
             {
@@ -51,12 +53,14 @@ namespace Capstone.DAO
             return cards;
         }
 
-        public Card createCard(Card card)
+        public Card createCard(Card card, int deckId)
         {
 
-            string sql = "INSERT INTO cards (term, definition, deck_id, user_id) " +
+            string sql = "INSERT INTO cards (term, definition, user_id) " +
                 "OUTPUT INSERTED.card_id " +
-                "VALUES (@term, @definition, @deck_id, @user_id)";
+                "VALUES (@term, @definition, @user_id)";
+            string sql2 = "INSERT INTO cardxdeck(deck_id, card_id) " +
+                "VALUES (@deck_id, @card_id)";
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -66,10 +70,16 @@ namespace Capstone.DAO
                     {
                         cmd.Parameters.AddWithValue("@term", card.term);
                         cmd.Parameters.AddWithValue("@definition", card.definition);
-                        cmd.Parameters.AddWithValue("@deck_id", card.deckId);
                         cmd.Parameters.AddWithValue("@user_id", card.userId);
 
                         card.cardId = (int)cmd.ExecuteScalar();
+                    }
+
+                    using (SqlCommand cmd = new SqlCommand(sql2, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@card_id", card.cardId);
+                        cmd.Parameters.AddWithValue("@deck_id", deckId);
+                        cmd.ExecuteScalar();
                     }
                 }
             }
@@ -84,18 +94,17 @@ namespace Capstone.DAO
 
         public Card UpdateCard(Card updatedCard)
         {
-            string SqlUpdatePet = "UPDATE cards SET term=@term, definition=@definition, " +
+            string SqlUpdateCard = "UPDATE cards SET term=@term, definition=@definition, " +
             "deck_id=@deck_id, user_id=@user_id " +
             "WHERE card_id = @card_id";
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
 
-                using (SqlCommand cmd = new SqlCommand(SqlUpdatePet, conn))
+                using (SqlCommand cmd = new SqlCommand(SqlUpdateCard, conn))
                 {
                     cmd.Parameters.AddWithValue("@term", updatedCard.term);
                     cmd.Parameters.AddWithValue("@definition", updatedCard.definition);
-                    cmd.Parameters.AddWithValue("@deck_id", updatedCard.deckId);
                     cmd.Parameters.AddWithValue("@user_id", updatedCard.userId);
                     cmd.Parameters.AddWithValue("@card_id", updatedCard.cardId);
 
@@ -116,7 +125,6 @@ namespace Capstone.DAO
         {
             Card card = new Card();
             card.cardId = Convert.ToInt32(reader["card_id"]);
-            card.deckId = Convert.ToInt32(reader["deck_id"]);
             card.term = Convert.ToString(reader["term"]);
             card.definition = Convert.ToString(reader["definition"]);
             card.userId = Convert.ToInt32(reader["user_id"]);

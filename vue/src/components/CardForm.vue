@@ -63,7 +63,7 @@ export default{
                 CardService
                     .updateCard(this.newCard)
                     .then(response => {
-                        if (response.status === 201) {
+                        if (response.status === 200) {
                             this.$store.commit(
                                 'SET_NOTIFICATION',
                                 {
@@ -72,6 +72,7 @@ export default{
                                 }
                             );
                             window.location.reload();
+                            console.log("Reached update Card!");
                         }
                     })
                     .catch(error => {

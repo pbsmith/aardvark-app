@@ -4,8 +4,8 @@
             <p>{{ currentCard.term }}</p>
             <p>{{ currentCard.definition }}</p>
         </div>
-        <button v-on:click="editCard" v-if="!isFormDisplayed">Edit</button>
-        <button v-on:click="cancelCard" v-if="isFormDisplayed">Cancel</button>
+        <button  class="form-button" id="card-editBtn" v-on:click="editCard" v-if="!isFormDisplayed">Edit</button>
+        <button  class="form-button" id="card-editBtn" v-on:click="cancelCard" v-if="isFormDisplayed">Cancel</button>
     </div>
     <CardForm v-if="isFormDisplayed" v-bind:card="currentCard"/>
 </template>
@@ -35,9 +35,10 @@ export default {
 }
 </script>
 
-<style scoped>
-.cardcontainer {
-    padding: 2vh;
-    border: 0.2rem solid black;
-}
+<!--style unscoped-->
+<style >
+   #card-editBtn{
+    margin: .5rem;
+    width: 4.1rem;
+   }
 </style>

@@ -26,11 +26,15 @@ namespace Capstone.Controllers
         }
 
         [HttpPost()]
-        public ActionResult<Card> CreateDeck(Card card)
+        public ActionResult<Card> CreateCard(JsonCard card)
         {
+            Card newCard = new Card();
+            newCard.cardId = card.cardId;
+            newCard.definition = card.definition;
+            newCard.term = card.term;
             User user = userDao.GetUserByUsername(User.Identity.Name);
-            card.userId = user.UserId;
-            Card added = cardDao.createCard(card);
+            newCard.userId = user.UserId;
+            Card added = cardDao.createCard(newCard, card.deckId);
             return Created($"/card/{added.cardId}", added);
         }
 

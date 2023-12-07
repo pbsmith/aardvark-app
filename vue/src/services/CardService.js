@@ -12,6 +12,6 @@ export default {
   },
 
   updateCard(card) {
-    return axios.put('/card', card)
+    return axios.put(`/card/${card.cardId}`, card)
   }
 }

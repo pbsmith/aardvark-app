@@ -108,7 +108,8 @@ export default {
 
 }
 
-#cardsInDeck {
+
+.cardcontainer {
     margin: auto;
     margin-bottom: .5rem;
     width: 90%;
