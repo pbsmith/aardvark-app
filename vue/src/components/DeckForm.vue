@@ -106,53 +106,9 @@ export default {
 .container {
     display: flex;
     justify-content: center;
-    align-items: center;
     height: 100vh;
-}
-
-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-    max-width: 400px;
-    width: 100%;
     font-family: "Poppins", sans-serif;
+    max-height: 26rem;
 }
 
-form h1 {
-    text-align: center;
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-form label {
-    display: block;
-    margin-bottom: 8px;
-    color: #555;
-}
-
-form input {
-    width: 90%;
-    padding: 10px;
-    margin-bottom: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-form button {
-    width: 95%;
-    margin-top: 25px;
-    padding: 15px;
-    background-color: blueviolet;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-form button:hover {
-    background-color: red;
-}</style>
+</style>

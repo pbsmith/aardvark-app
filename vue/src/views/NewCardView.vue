@@ -16,7 +16,6 @@ export default {
                 deckId: 0,
                 cardTerm: '',
                 cardDefinition: '',
-                cardTags: '',
                 userId: 0,
             }
         }
