@@ -77,7 +77,7 @@ namespace Capstone.DAO
             return decks;
         }
 
-        public Deck createDeck(Deck deck)
+        public Deck CreateDeck(Deck deck)
         {
             string sql = "INSERT INTO decks (deck_title, deck_tags, deck_desc, user_id) " +
                 "OUTPUT INSERTED.deck_id " +
@@ -104,6 +104,36 @@ namespace Capstone.DAO
             }
 
             return deck;
+        }
+
+        public Deck UpdateDeck(Deck deck)
+        {
+            string SqlUpdateDeck = "UPDATE decks SET deck_title=@deck_title, deck_tags=@deck_tags, " +
+            "deck_desc=@deck_desc " +
+            "WHERE deck_id = @deck_id";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(SqlUpdateDeck, conn))
+                {
+                    cmd.Parameters.AddWithValue("@deck_title", deck.deckTitle);
+                    cmd.Parameters.AddWithValue("@deck_tags", deck.deckTags);
+                    cmd.Parameters.AddWithValue("@deck_desc", deck.deckDesc);
+                    cmd.Parameters.AddWithValue("@deck_id", deck.deckId);
+
+                    int count = cmd.ExecuteNonQuery();
+                    if (count == 1)
+                    {
+                        return deck;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
         }
 
         private Deck MapRowToDeck(SqlDataReader reader)

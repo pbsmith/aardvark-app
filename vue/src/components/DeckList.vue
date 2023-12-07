@@ -36,14 +36,7 @@ export default {
     justify-content: space-around;
 }
 
-.deck {
-    padding: 0rem 1.2rem 1.2rem 1.2rem;
-    background-color: #ffe8d6;
 
-    border: .05rem solid #cb997e;
-    border-radius: 7%;
-    box-shadow: 0 0 1rem #cb997e;
-}
 
 .deck:hover{
     background-color: #cb997e;

@@ -5,7 +5,7 @@
     <div>
         <button class="form-button" v-if="!isFormDisplayed" v-on:click="displayForm">Create Card</button>
         <button class="form-button" v-if="isFormDisplayed" v-on:click="cancelForm">Cancel</button>
-        <button class="form-button" v-on:click="editDeck">Edit Deck</button>
+        <button class="form-button" v-on:click="finishDeck">Finish Edit</button>
     </div>
     <div id="cardform">
         <CardForm v-if="isFormDisplayed" v-bind:card="card" />
@@ -49,8 +49,8 @@ export default {
         displayForm() {
             this.isFormDisplayed = true;
         },
-        editDeck() {
-            this.$router.push({name: 'deck-edit', params:{deckId: this.deck.deckId} })
+        finishDeck() {
+            this.$router.push({name: 'deck-detail', params:{deckId: this.deck.deckId} })
         },
         cancelForm() {
             this.isFormDisplayed = false;

@@ -44,9 +44,24 @@ namespace Capstone.Controllers
         public ActionResult<Deck> CreateDeck(Deck deck)
         {
             User user = userDao.GetUserByUsername(User.Identity.Name);
-            deck.userId = user.UserId;           
-            Deck added = deckDao.createDeck(deck);
+            deck.userId = user.UserId;
+            Deck added = deckDao.CreateDeck(deck);
             return Created($"/deck/{added.deckId}", added);
+        }
+
+        [HttpPut("{deckId}")]
+        public ActionResult<Deck> UpdateDeck(Deck deck)
+        {
+            Deck newDeck = deckDao.UpdateDeck(deck);
+
+            if (newDeck == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(newDeck);
+            }
         }
     }
 }

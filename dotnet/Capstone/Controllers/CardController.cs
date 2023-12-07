@@ -34,7 +34,7 @@ namespace Capstone.Controllers
             newCard.term = card.term;
             User user = userDao.GetUserByUsername(User.Identity.Name);
             newCard.userId = user.UserId;
-            Card added = cardDao.createCard(newCard, card.deckId);
+            Card added = cardDao.CreateCard(newCard, card.deckId);
             return Created($"/card/{added.cardId}", added);
         }
 

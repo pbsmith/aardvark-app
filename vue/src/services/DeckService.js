@@ -16,4 +16,9 @@ export default {
     return axios.post('/deck', deck)
   },
 
+  updateDeck(deck) {
+    console.log(deck)
+    return axios.put(`/deck/${deck.deckId}`, deck)
+  }
+
 }
