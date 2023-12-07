@@ -1,8 +1,8 @@
 <template>
     <div class="deckcontainer">
-        <h1>
+        <h2>
             {{ deck.deckTitle }}
-        </h1>
+        </h2>
         <div>
             <p>{{ deck.deckDesc }}</p>
             <p>{{ deck.deckTags }}</p>
@@ -17,12 +17,3 @@ export default {
         ['deck']
 }
 </script>
-
-<style scoped>
-.deckcontainer {
-    display: flex;
-    flex-direction: row;
-    padding: 2vh;
-    border: 0.2rem solid black;
-}
-</style>

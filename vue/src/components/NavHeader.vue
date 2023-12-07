@@ -1,32 +1,36 @@
 <template>
-    <div id="nav-bar"> <!-- logo/home, search bar, add plus sign, login, register -->
-        <div id="logo" >
-            <router-link v-bind:to="{ name: 'home' }">
-                <img src="../imgs/Aardvark.jpg" class="logo">
-                <h1>Aardvark</h1><!-- todo: replace with image -->
-            </router-link>
-        </div>
-        <div id="search-bar" >
-            <input class="search-bar" type="text" placeholder="Search">
-        </div>
-        <div id="add-button" >
-            <button class="addBtn">
-                <router-link v-bind:to="{ name: 'newdeck' }">
-                    <img src="../imgs/addform.svg" width="24" height="24">
+    <nav id="nav-bar">
+        <ul>
+            <li id="logo">
+                <router-link v-bind:to="{ name: 'home' }">
+                    <img src="../imgs/Aardvark.png" class="logo">
                 </router-link>
-            </button>
-        </div>
-        <div id="login" >
-            <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+            </li>
+            <li id="title">
+                <router-link v-bind:to="{ name: 'home' }">
+                    AARDVARK
+                </router-link>
+            </li>
+            <li id="search-bar">
+                <input class="search-bar" type="text" placeholder="Search">
+            </li>
+            <li id="add-button" class="button">
+                <router-link v-bind:to="{ name: 'newdeck' }">
+                    <img src="../imgs/formImg.png" width="24" height="24">
+                </router-link>
+            </li>
+            <li id="login" class="button">
+                <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
 
-            <router-link v-bind:to="{ name: 'login' }" v-else>
-                Login</router-link>
-        </div>
-        <div id="register" >
-            <router-link v-bind:to="{ name: 'register' }">
-                Sign Up</router-link>
-        </div>
-    </div>
+                <router-link v-bind:to="{ name: 'login' }" v-else>
+                    Login</router-link>
+            </li>
+            <li id="register" class="button">
+                <router-link v-bind:to="{ name: 'register' }">
+                    Sign Up</router-link>
+            </li>
+        </ul>
+    </nav>
 </template>
 
 <script>
@@ -35,88 +39,77 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 /* grid setup */
-div#nav-bar {
-    display: grid; 
-    grid-template-columns: 1fr 3fr 0.4fr;
-    grid-template-areas: 
-    "imglogo logo searchbar addformBtn login register";
+#nav-bar {
     position: absolute;
     top: 0;
     left: 0;
-    width: 97.8%;
-    padding: 10px 15px 10px 20px; 
+    right: 0;
+   
+    background-color: #6b705c;
+    font-size: medium;
+}
+
+ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
     align-items: center;
-    background-color: #fff;
+
+    list-style-type: none;
+    margin-right: 1rem;
 }
 
-h1 {
-    grid-area: logo;
-    font-size: 14px;
+li {
+    display: inline-block;
+}
+
+#title {
+    font-size: xx-large;
     font-weight: bold;
-    color: #3498db; 
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    font-family: "Poppins", sans-serif;
-    position: relative;
-    padding-left: 60px;
+    letter-spacing: .1rem;
+    text-shadow: .05rem .05rem .2rem rgba(0, 0, 0, 0.7);
+    color: #ddbea9;
 }
 
-.logo{
-    grid-area: imglogo;
-    background-color: #cb997e;
-    position: absolute;
-    width: 60px;
-    height: 50px;
+.logo {
+    width: 3.5rem;
 }
-
-
 
 /* other styling */
 
-#login {
-    grid-area: login;
-    padding: 1.3vh;
-    border: 0.12rem solid black;
-    border-radius: 1vh;
+.button  {
+    padding: .5rem;
+    border-radius: 0.7vh;
     font-size: large;
-    margin-left: 20px;
-    background-color: wheat; 
-    color: #3498db;
-}
-#register {
-    grid-area: register;
-    padding: 1.3vh;
-    border: 0.12rem solid black;
-    border-radius: 1vh;
-    font-size: large;
-    margin-left: 20px;
-    background-color: wheat; 
-    color: #3498db;
+    background-color: #4c4e40;
+    border: 1px solid #4c4e40;
+    box-shadow: 0 0 .5rem #4c4e40;
+    color: black;
 }
 
-.search-bar{
-    grid-area: searchbar;
+#login, #register{
+    padding: .7rem
+}
+
+.button:hover {
+    background-color: #6b705c;
+}
+
+.search-bar {
     border-radius: 0.7vh;
     width: 40vw;
     height: 5vh;
-    border: 1px solid black;
-    background-color: wheat;
+    border: 1px solid #4c4e40;
+    background-color: #b7b7a4;
     font-weight: bold;
-    font-size: 17px;
-}
-.addBtn{
-    grid-area: addformBtn;
-    margin-left: 150px;
-    margin-right: 10px;
-    border-radius: 5px;
-    padding-top: 2px;
-}
-a {
-    text-decoration: none;
+    box-shadow: 0 0 .5rem #4c4e40;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
 </style>

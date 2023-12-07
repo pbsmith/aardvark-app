@@ -2,9 +2,9 @@
   <div class="loading" v-if="isLoading">
     <p>Loading...</p>
   </div>
-  <div v-else>
-    <h1>Flashcard Decks</h1>
-      <DeckList v-bind:decks="decks" />
+  <div v-else id="home-grid">
+    <h1 id="deck-title">- Flashcard Decks -</h1>
+    <DeckList v-bind:decks="decks" />
   </div>
 </template>
 
@@ -44,8 +44,12 @@ export default {
 </script>
 
 <style>
-  body{
-    height: 100%;
-    width: 100vw;
-  }
+#deck-title {
+  margin: auto;
+  margin-bottom: 2rem;
+  width: fit-content;
+  text-align: center;
+
+  padding: .8rem .8rem .8rem .8rem;
+}
 </style>

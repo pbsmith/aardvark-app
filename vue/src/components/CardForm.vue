@@ -1,7 +1,6 @@
 <template>
     <div class="card-container">
         <form v-on:submit.prevent="submitForm" class="card-form">
-            <h1>Create a New Card</h1>
             <div class="field">
                 <label for="term">Term</label>
                 <input type="text" id="term" name="term" v-model="newCard.term">
@@ -58,9 +57,26 @@ export default{
                     })
                     .catch(error => {
                         this.handleErrorResponse(error, 'adding');
-                    });
-                //add edit here
-
+                    })
+            }
+            else {
+                CardService
+                    .updateCard(this.newCard)
+                    .then(response => {
+                        if (response.status === 201) {
+                            this.$store.commit(
+                                'SET_NOTIFICATION',
+                                {
+                                    message: 'A new card was added.',
+                                    type: 'success'
+                                }
+                            );
+                            window.location.reload();
+                        }
+                    })
+                    .catch(error => {
+                        this.handleErrorResponse(error, 'adding');
+                    })
             }
 
         },

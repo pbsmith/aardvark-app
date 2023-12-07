@@ -9,5 +9,9 @@ export default {
 
   getCardsByDeckId(deckId){
     return axios.get(`/card/deck/${deckId}`)
+  },
+
+  updateCard(card) {
+    return axios.put('/card', card)
   }
 }
