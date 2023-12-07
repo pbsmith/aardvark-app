@@ -8,6 +8,6 @@ namespace Capstone.DAO.Interface
     {
         Card createCard(Card card);
         List<Card> GetCardsByDeckId(int deckId);
-
+        Card UpdateCard(Card updatedCard);
     }
 }

@@ -18,6 +18,13 @@ namespace Capstone.Controllers
             this.userDao = userDao;
         }
 
+        [HttpGet("deck/{deckId}")]
+        public ActionResult<List<Card>> GetCards(int deckId)
+        {
+            List<Card> cards = cardDao.GetCardsByDeckId(deckId);
+            return Ok(cards);
+        }
+
         [HttpPost()]
         public ActionResult<Card> CreateDeck(Card card)
         {
@@ -27,11 +34,20 @@ namespace Capstone.Controllers
             return Created($"/card/{added.cardId}", added);
         }
 
-        [HttpGet("deck/{deckId}")]
-        public ActionResult<List<Card>> GetCards(int deckId)
+        [HttpPut("{cardId}")]
+        public ActionResult<Card> Card(int cardId, Card changedCard)
         {
-            List<Card> cards = cardDao.GetCardsByDeckId(deckId);
-            return Ok(cards);
+            Card newCard = cardDao.UpdateCard(changedCard);
+
+            if (newCard == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(newCard);
+            }
+
         }
     }
 }

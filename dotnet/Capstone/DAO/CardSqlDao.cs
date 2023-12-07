@@ -82,6 +82,36 @@ namespace Capstone.DAO
 
         }
 
+        public Card UpdateCard(Card updatedCard)
+        {
+            string SqlUpdatePet = "UPDATE cards SET term=@term, definition=@definition, " +
+            "deck_id=@deck_id, user_id=@user_id " +
+            "WHERE card_id = @card_id";
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(SqlUpdatePet, conn))
+                {
+                    cmd.Parameters.AddWithValue("@term", updatedCard.term);
+                    cmd.Parameters.AddWithValue("@definition", updatedCard.definition);
+                    cmd.Parameters.AddWithValue("@deck_id", updatedCard.deckId);
+                    cmd.Parameters.AddWithValue("@user_id", updatedCard.userId);
+                    cmd.Parameters.AddWithValue("@card_id", updatedCard.cardId);
+
+                    int count = cmd.ExecuteNonQuery();
+                    if (count == 1)
+                    {
+                        return updatedCard;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+        }
+
         private Card MapRowToCard(SqlDataReader reader)
         {
             Card card = new Card();
