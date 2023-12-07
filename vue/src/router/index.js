@@ -8,6 +8,7 @@ import NewDeckView from '../views/NewDeckView.vue';
 import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import DeckDetailView from '../views/DeckDetailView.vue';
+import EditDeckView from '../views/EditDeckView.vue';
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -30,6 +31,14 @@ const routes = [
     path: '/deck/:deckId',
     name: 'deck-detail',
     component: DeckDetailView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/deck/edit/:deckId',
+    name: 'deck-edit',
+    component: EditDeckView,
     meta: {
       requiresAuth: true
     }

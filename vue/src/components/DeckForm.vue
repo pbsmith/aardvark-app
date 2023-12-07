@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <form v-on:submit.prevent="submitForm" class="deck-form">
-            <h1>Create a New Deck</h1>
+            <h1>{{isNewCardPage}}</h1>
             <div class="field">
                 <label for="title">Title</label>
                 <input type="text" id="title" name="title" v-model="newDeck.deckTitle">
@@ -24,6 +24,14 @@
 import DeckService from '../services/DeckService.js';
 
 export default {
+    computed: {
+        isNewCardPage() {
+            if(this.$route.name == 'newdeck') {
+                return 'Create New Deck'
+            }
+            return 'Edit Deck';
+        }
+    },
     props: {
         deck: {
             type: Object,
@@ -65,8 +73,25 @@ export default {
                     .catch(error => {
                         this.handleErrorResponse(error, 'adding');
                     });
-                //add edit here
-
+            }
+            else {
+                DeckService
+                    .updateDeck(this.newDeck)
+                    .then(response => {
+                        if (response.status === 200) {
+                            this.$store.commit(
+                                'SET_NOTIFICATION',
+                                {
+                                    message: 'A deck was modified.',
+                                    type: 'success'
+                                }
+                            );
+                            window.location.reload();
+                        }
+                    })
+                    .catch(error => {
+                        this.handleErrorResponse(error, 'adding');
+                    })
             }
 
         },

@@ -53,12 +53,13 @@ namespace Capstone.DAO
             return cards;
         }
 
-        public Card createCard(Card card, int deckId)
+        public Card CreateCard(Card card, int deckId)
         {
 
             string sql = "INSERT INTO cards (term, definition, user_id) " +
                 "OUTPUT INSERTED.card_id " +
                 "VALUES (@term, @definition, @user_id)";
+
             string sql2 = "INSERT INTO cardxdeck(deck_id, card_id) " +
                 "VALUES (@deck_id, @card_id)";
             try
@@ -95,8 +96,9 @@ namespace Capstone.DAO
         public Card UpdateCard(Card updatedCard)
         {
             string SqlUpdateCard = "UPDATE cards SET term=@term, definition=@definition, " +
-            "deck_id=@deck_id, user_id=@user_id " +
+            "user_id=@user_id " +
             "WHERE card_id = @card_id";
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
