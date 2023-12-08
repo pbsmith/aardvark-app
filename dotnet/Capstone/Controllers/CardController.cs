@@ -2,6 +2,7 @@
 using Capstone.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Capstone.Controllers
 {
@@ -16,6 +17,13 @@ namespace Capstone.Controllers
         {
             this.cardDao = cardDao;
             this.userDao = userDao;
+        }
+
+        [HttpGet()]
+        public ActionResult<List<Card>> GetAllCards()
+        {
+            List<Card> cards = cardDao.GetAllCards();
+            return Ok(cards);
         }
 
         [HttpGet("deck/{deckId}")]
@@ -52,6 +60,17 @@ namespace Capstone.Controllers
                 return Ok(newCard);
             }
 
+        }
+
+        [HttpDelete("{cardId}")]
+        public ActionResult DeleteCard(int id)
+        {
+            int numOfDeleted = cardDao.DeleteCardById(id);
+            if(numOfDeleted==1)
+            {
+                return NoContent();
+            }
+            return NotFound();
         }
     }
 }

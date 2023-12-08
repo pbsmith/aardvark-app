@@ -5,7 +5,7 @@
                 name: 'deck-detail',
                 params: { deckId: deck.deckId }
             }">
-                <DeckDetails v-bind:deck="deck" class="modify-deck" />
+                <DeckDetails v-bind:deck="deck"/>
             </router-link>
         </div>
     </div>
@@ -35,19 +35,5 @@ export default {
     justify-content: center;
     justify-content: space-around;
 }
-
-
-
-.deck:hover{
-    background-color: #cb997e;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-}
-
-
-
 
 </style>

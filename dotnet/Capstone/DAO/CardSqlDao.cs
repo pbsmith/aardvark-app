@@ -18,7 +18,38 @@ namespace Capstone.DAO
             connectionString = dbConnectionString;
         }
 
-        public List<Card> GetCardsByDeckId(int deckId)
+        public List<Card> GetAllCards()
+        {
+                List<Card> cards = new List<Card>();
+
+                string sql = "SELECT card_id, term, definition, user_id " +
+                "FROM cards";
+
+                try
+                {
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        conn.Open();
+
+                        SqlCommand cmd = new SqlCommand(sql, conn);
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            Card card = MapRowToCard(reader);
+                            cards.Add(card);
+                        }
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    throw new DaoException("SQL exception occurred", ex);
+                }
+
+                return cards;
+            }
+
+            public List<Card> GetCardsByDeckId(int deckId)
         {
             List<Card> cards = new List<Card>();
 
@@ -121,6 +152,31 @@ namespace Capstone.DAO
                     }
                 }
             }
+        }
+
+        public int DeleteCardById(int cardId)
+        {
+            int numOfRows = 0;
+
+            string sql = "DELETE FROM cards WHERE card_id=@card_id";
+
+            try
+            {
+                using(SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@card_id", cardId);
+                    numOfRows = cmd.ExecuteNonQuery();
+                }
+            }
+            catch(SqlException ex)
+            {
+                throw new DaoException("Sql Exception Occurred", ex);
+            }
+
+            return numOfRows;
         }
 
         private Card MapRowToCard(SqlDataReader reader)

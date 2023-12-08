@@ -42,11 +42,3 @@ export default {
         ['currentCard']
 }
 </script>
-
-<!--style unscoped-->
-<style >
-   #card-editBtn{
-    margin: .5rem;
-    width: 4.1rem;
-   }
-</style>

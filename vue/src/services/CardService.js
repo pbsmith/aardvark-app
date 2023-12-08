@@ -13,5 +13,9 @@ export default {
 
   updateCard(card) {
     return axios.put(`/card/${card.cardId}`, card)
+  },
+
+  getAllCards() {
+    return axios.get('/card')
   }
 }

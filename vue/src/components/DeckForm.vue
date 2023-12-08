@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div id="deck-form-container">
         <form v-on:submit.prevent="submitForm" class="deck-form">
             <h1>{{isNewCardPage}}</h1>
             <div class="field">
@@ -14,7 +14,7 @@
                 <label for="tags">Tags</label>
                 <input type="text" id="tags" name="tags" v-model="newDeck.deckTags" />
             </div>
-            <button type="submit" value="Save">Save</button>
+            <button id="save" type="submit" value="Save">Save</button>
 
         </form>
     </div>
@@ -126,14 +126,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.container {
-    display: flex;
-    justify-content: center;
-    height: 100vh;
-    font-family: "Poppins", sans-serif;
-    max-height: 26rem;
-}
-
-</style>

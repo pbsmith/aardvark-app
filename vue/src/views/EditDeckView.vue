@@ -2,7 +2,7 @@
     <div class="deck-detail-container">
         <DeckDetails v-bind:deck="deck" />
     </div>
-    <div>
+    <div class="deckdetail-button-container">
         <button class="form-button" v-if="!isFormDisplayed" v-on:click="displayForm">Create Card</button>
         <button class="form-button" v-if="isFormDisplayed" v-on:click="cancelForm">Cancel</button>
         <button class="form-button" v-on:click="finishDeck">Finish Edit</button>
@@ -80,53 +80,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.deckcontainer{
-    margin: auto;
-    padding: 0rem 1.2rem 1.2rem 1.2rem;
-    background-color: #ffe8d6;
-    width: 90%;
-
-    border: .05rem solid #cb997e;
-    border-radius: 1rem;
-    box-shadow: 0 0 1rem #cb997e;
-}
-
-.form-button {
-    margin: 1rem 1rem .5rem 4rem;
-    padding: 1.5vh;
-    background-color: #b7b7a4;
-    border: none;
-    border-radius: .5rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    border: .05rem solid #b7b7a4;
-    box-shadow: 0 0 .25rem #6b705c;
-}
-
-.form-button:hover{
-    background-color: #6b705c;
-    border: .05rem solid #4c4e40;
-    box-shadow: 0 0 .25rem #4c4e40;
-
-}
-
-
-.cardcontainer {
-    margin: auto;
-    margin-bottom: .5rem;
-    width: 90%;
-    padding: .5rem 1rem .5rem 1rem;
-    background-color: #ffe8d6;
-
-    border: .05rem solid #cb997e;
-    border-radius: .5rem;
-    box-shadow: 0 0 2rem #cb997e;
-}
-
-#cardform {
-    margin-left:3rem;
-    margin-bottom:1rem;
-}
-</style>
