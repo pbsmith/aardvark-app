@@ -123,6 +123,31 @@ namespace Capstone.DAO
             }
         }
 
+        public int DeleteCardById(int cardId)
+        {
+            int numOfRows = 0;
+
+            string sql = "DELETE FROM cards WHERE card_id=@card_id";
+
+            try
+            {
+                using(SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@card_id", cardId);
+                    numOfRows = cmd.ExecuteNonQuery();
+                }
+            }
+            catch(SqlException ex)
+            {
+                throw new DaoException("Sql Exception Occurred", ex);
+            }
+
+            return numOfRows;
+        }
+
         private Card MapRowToCard(SqlDataReader reader)
         {
             Card card = new Card();

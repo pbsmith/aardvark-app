@@ -9,5 +9,8 @@ namespace Capstone.DAO.Interface
         Card CreateCard(Card card, int deckId);
         List<Card> GetCardsByDeckId(int deckId);
         Card UpdateCard(Card updatedCard);
+
+        int DeleteCardById(int cardId);
+
     }
 }
