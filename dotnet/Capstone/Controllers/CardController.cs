@@ -53,5 +53,16 @@ namespace Capstone.Controllers
             }
 
         }
+
+        [HttpDelete("{cardId}")]
+        public ActionResult DeleteCard(int id)
+        {
+            int numOfDeleted = cardDao.DeleteCardById(id);
+            if(numOfDeleted==1)
+            {
+                return NoContent();
+            }
+            return NotFound();
+        }
     }
 }
