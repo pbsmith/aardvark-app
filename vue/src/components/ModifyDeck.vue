@@ -22,7 +22,6 @@ import DeckService from '../services/DeckService';
 import CardDetails from './CardDetails.vue';
 import DeckDetails from './DeckDetails.vue';
 import { ref } from 'vue';
-import draggable from 'vuedraggable';
 
 export default {
     data() {
@@ -40,7 +39,6 @@ export default {
     components: {
         CardDetails,
         DeckDetails,
-        draggable
     },
     props: {
         cards: {
