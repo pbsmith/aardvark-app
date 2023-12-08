@@ -6,6 +6,7 @@
         <button class="form-button" v-if="!isFormDisplayed" v-on:click="displayForm">Create Card</button>
         <button class="form-button" v-if="isFormDisplayed" v-on:click="cancelForm">Cancel</button>
         <button class="form-button" v-on:click="editDeck">Edit Deck</button>
+        <button class="form-button" v-on:click="beginStudySession">Begin Study Session</button>
     </div>
     <div id="cardform">
         <CardForm v-if="isFormDisplayed" v-bind:card="card" />
@@ -53,6 +54,9 @@ export default {
         },
         cancelForm() {
             this.isFormDisplayed = false;
+        },
+        beginStudySession() {
+            this.$router.push({ name: 'study-session', params: { deckId: this.deck.deckId } })
         },
         getDeck() {
             DeckService.getDeckById(this.$route.params.deckId)

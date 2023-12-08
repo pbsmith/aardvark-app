@@ -9,11 +9,9 @@ import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import DeckDetailView from '../views/DeckDetailView.vue';
 import EditDeckView from '../views/EditDeckView.vue';
-<<<<<<< HEAD
 import StudySessionView from '../views/StudySessionView.vue';
-=======
 import ModifyDeckView from '../views/ModifyDeckView.vue';
->>>>>>> d9fc1488c84de988098552edc528cc539c938c81
+
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
