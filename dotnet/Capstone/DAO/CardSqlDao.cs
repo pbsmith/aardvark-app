@@ -18,7 +18,38 @@ namespace Capstone.DAO
             connectionString = dbConnectionString;
         }
 
-        public List<Card> GetCardsByDeckId(int deckId)
+        public List<Card> GetAllCards()
+        {
+                List<Card> cards = new List<Card>();
+
+                string sql = "SELECT card_id, term, definition, user_id " +
+                "FROM cards";
+
+                try
+                {
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        conn.Open();
+
+                        SqlCommand cmd = new SqlCommand(sql, conn);
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                            Card card = MapRowToCard(reader);
+                            cards.Add(card);
+                        }
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    throw new DaoException("SQL exception occurred", ex);
+                }
+
+                return cards;
+            }
+
+            public List<Card> GetCardsByDeckId(int deckId)
         {
             List<Card> cards = new List<Card>();
 

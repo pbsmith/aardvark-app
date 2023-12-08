@@ -41,17 +41,10 @@ CREATE TABLE cards (
 	CONSTRAINT PK_card PRIMARY KEY (card_id)
 )
 
-<<<<<<< HEAD
 CREATE TABLE cardxdeck (
 	card_id int NOT NULL,
 	deck_id int NOT NULL
 	CONSTRAINT PK_cardxdeck PRIMARY KEY (card_id, deck_id)
-=======
-CREATE TABLE cardxdeck (
-	card_id int NOT NULL,
-	deck_id int NOT NULL
-	CONSTRAINT PK_cardxdeck PRIMARY KEY (card_id, deck_id)
->>>>>>> ac476b83b345e78620e5143ec991c148cb28df7c
 )
 
 --populate default data
@@ -69,11 +62,7 @@ INSERT INTO decks (deck_title, deck_tags, deck_desc, user_id)
 
 ALTER TABLE decks ADD CONSTRAINT user_id_FK_on_decks FOREIGN KEY (user_id) REFERENCES users(user_id);
 ALTER TABLE cards ADD CONSTRAINT user_id_FK_on_cards FOREIGN KEY (user_id) REFERENCES users(user_id);
-<<<<<<< HEAD
 ALTER TABLE cardxdeck ADD CONSTRAINT deck_id_FK FOREIGN KEY (deck_id) REFERENCES decks(deck_id);
-=======
-ALTER TABLE cardxdeck ADD CONSTRAINT deck_id_FK FOREIGN KEY (deck_id) REFERENCES decks(deck_id);
->>>>>>> ac476b83b345e78620e5143ec991c148cb28df7c
 ALTER TABLE cardxdeck ADD CONSTRAINT card_id_FK FOREIGN KEY (card_id) REFERENCES cards(card_id);
 
 GO
