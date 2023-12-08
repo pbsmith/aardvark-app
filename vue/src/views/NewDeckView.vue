@@ -1,5 +1,8 @@
 <template>
-    <DeckForm v-bind:deck="deck"/>
+    <div id="NewDeckFormView">
+        <DeckForm v-bind:deck="deck"/>
+    </div>
+    
 </template>
 
 <script>
@@ -22,3 +25,12 @@ export default{
     }
 }
 </script>
+
+<style scoped>
+#deck-form-container {
+    display: flex;
+    justify-content: center;
+    height: fit-content;
+    font-family: "Poppins", sans-serif;
+}
+</style>

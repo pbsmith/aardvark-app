@@ -4,7 +4,7 @@
   </div>
   <div v-else id="home-grid">
     <h1 id="deck-title">- Flashcard Decks -</h1>
-    <DeckList v-bind:decks="decks" />
+    <DeckList id="home-decklist" v-bind:decks="decks" />
   </div>
 </template>
 
@@ -51,5 +51,9 @@ export default {
   text-align: center;
 
   padding: .8rem .8rem .8rem .8rem;
+}
+/** This is for the hover highlight to only apply to DeckList in this View */
+#home-decklist > .deck > a > .deckcontainer:hover{
+    background-color: #cb997e;
 }
 </style>

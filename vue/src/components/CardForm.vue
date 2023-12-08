@@ -9,7 +9,7 @@
                 <label for="definition">Definition</label>
                 <input type="text" id="definition" name="definition" v-model="newCard.definition">
             </div>
-            <button type="submit" value="Save">Save</button>
+            <button id="save" type="submit" value="Save">Save</button>
         </form>
     </div>
 </template>

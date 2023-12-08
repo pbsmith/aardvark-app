@@ -17,9 +17,9 @@
           <label for="password">Password</label>
           <input type="password" id="password" v-model="user.password" required />
         </div>
-        <button type="submit">Sign in</button>
+        <button class="form-button" type="submit">Sign in</button>
         <p>
-          <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
+          <router-link id="sign-up-link" v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link>
         </p>
       </form>
     </div>
@@ -62,3 +62,16 @@ export default {
   }
 };
 </script>
+
+<style>
+.container > .login-form{
+    display: flex;
+    justify-content: center;
+    height: fit-content;
+    font-family: "Poppins", sans-serif;
+}
+
+#sign-up-link:hover{
+  text-decoration: underline;
+}
+</style>
