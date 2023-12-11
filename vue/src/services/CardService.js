@@ -17,5 +17,10 @@ export default {
 
   getAllCards() {
     return axios.get('/card')
+  },
+
+  deleteCardFromDeck(card) {
+    console.log("reached delete card from deck in card service", card)
+    return axios.delete(`/card/${card.cardId}/${card.deckId}`)
   }
 }

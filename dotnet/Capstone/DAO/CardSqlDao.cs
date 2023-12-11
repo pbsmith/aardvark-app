@@ -20,36 +20,36 @@ namespace Capstone.DAO
 
         public List<Card> GetAllCards()
         {
-                List<Card> cards = new List<Card>();
+            List<Card> cards = new List<Card>();
 
-                string sql = "SELECT card_id, term, definition, user_id " +
-                "FROM cards";
+            string sql = "SELECT card_id, term, definition, user_id " +
+            "FROM cards";
 
-                try
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
                     {
-                        conn.Open();
-
-                        SqlCommand cmd = new SqlCommand(sql, conn);
-                        SqlDataReader reader = cmd.ExecuteReader();
-
-                        while (reader.Read())
-                        {
-                            Card card = MapRowToCard(reader);
-                            cards.Add(card);
-                        }
+                        Card card = MapRowToCard(reader);
+                        cards.Add(card);
                     }
                 }
-                catch (SqlException ex)
-                {
-                    throw new DaoException("SQL exception occurred", ex);
-                }
-
-                return cards;
+            }
+            catch (SqlException ex)
+            {
+                throw new DaoException("SQL exception occurred", ex);
             }
 
-            public List<Card> GetCardsByDeckId(int deckId)
+            return cards;
+        }
+
+        public List<Card> GetCardsByDeckId(int deckId)
         {
             List<Card> cards = new List<Card>();
 
@@ -162,7 +162,7 @@ namespace Capstone.DAO
 
             try
             {
-                using(SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
 
@@ -172,7 +172,7 @@ namespace Capstone.DAO
                     numOfRows = cmd.ExecuteNonQuery();
                 }
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 throw new DaoException("Sql Exception Occurred", ex);
             }

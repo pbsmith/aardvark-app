@@ -10,7 +10,7 @@ import RegisterView from '../views/RegisterView.vue';
 import DeckDetailView from '../views/DeckDetailView.vue';
 import EditDeckView from '../views/EditDeckView.vue';
 import StudySessionView from '../views/StudySessionView.vue';
-import ModifyDeckView from '../views/ModifyDeckView.vue';
+import AddCardsView from '../views/AddCardsView.vue';
 
 
 /**
@@ -63,9 +63,9 @@ const routes = [
     }
   },
   {
-    path: '/modifydeck/:deckId',
-    name: 'modifydeck',
-    component: ModifyDeckView,
+    path: '/addcards/:deckId',
+    name: 'addcards',
+    component: AddCardsView,
     meta: {
       requiresAuth: true
     }
