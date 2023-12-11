@@ -18,7 +18,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import draggable from 'vuedraggable';
 
 const currentCards = ref([
     'Bat wing soup',
@@ -42,9 +41,26 @@ export default {
             getCurrentCards: CardService.getCardsByDeckId(this.$route.params.deckId),
         }
     },
+<<<<<<< HEAD
+    computed: {
+        deck() {
+            return DeckService
+                .getDeckById(this.deckId)
+        }
+    },
+    components: {
+        CardDetails,
+        DeckDetails,
+    },
+    props: {
+        cards: {
+            type: Array,
+            required: true
+=======
     created: {
         consoleLog() {
             console.log(CardService.getAllCards(this.$route.params.deckId))
+>>>>>>> e4c983a0ffb228ca0d756d665f23d1f363160f49
         }
     }
 };
