@@ -154,11 +154,11 @@ namespace Capstone.DAO
             }
         }
 
-        public int DeleteCardById(int cardId)
+        public int DeleteCardById(JsonCard jsonCard)
         {
             int numOfRows = 0;
 
-            string sql = "DELETE FROM cards WHERE card_id=@card_id";
+            string sql = "DELETE FROM cardxdeck WHERE card_id=@card_id AND deck_id=@deck_id";
 
             try
             {
@@ -167,7 +167,8 @@ namespace Capstone.DAO
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@card_id", cardId);
+                    cmd.Parameters.AddWithValue("@card_id", jsonCard.cardId);
+                    cmd.Parameters.AddWithValue("@deck_id", jsonCard.deckId);
                     numOfRows = cmd.ExecuteNonQuery();
                 }
             }
