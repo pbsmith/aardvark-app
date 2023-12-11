@@ -7,6 +7,10 @@ export default {
     return axios.post('/card', card)
   },
 
+  addCardToDeck(card) {
+    return axios.post(`/card/${card.cardId}/${card.deckId}`)
+  },
+
   getCardsByDeckId(deckId){
     return axios.get(`/card/deck/${deckId}`)
   },
@@ -20,7 +24,6 @@ export default {
   },
 
   deleteCardFromDeck(card) {
-    console.log("reached delete card from deck in card service", card)
     return axios.delete(`/card/${card.cardId}/${card.deckId}`)
   }
 }

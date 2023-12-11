@@ -11,6 +11,8 @@ import DeckDetailView from '../views/DeckDetailView.vue';
 import EditDeckView from '../views/EditDeckView.vue';
 import StudySessionView from '../views/StudySessionView.vue';
 import AddCardsView from '../views/AddCardsView.vue';
+import MemoryCardView from '../views/MemoryCardView.vue';
+import RaceGameView from '../views/RaceGameView.vue';
 
 
 /**
@@ -77,6 +79,22 @@ const routes = [
     component: LoginView,
     meta: {
       requiresAuth: false
+    }
+  },
+  {
+    path: "/deck/matching/:deckId",
+    name: "matching-game",
+    component: MemoryCardView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/deck/race/:deckId",
+    name: "race-game",
+    component: RaceGameView,
+    meta: {
+      requiresAuth: true
     }
   },
   {

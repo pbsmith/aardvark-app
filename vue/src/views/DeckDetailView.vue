@@ -7,6 +7,9 @@
         <button class="form-button" v-if="isFormDisplayed" v-on:click="cancelForm">Cancel</button>
         <button class="form-button" v-on:click="editDeck">Edit Deck</button>
         <button class="form-button" v-on:click="beginStudySession">Begin Study Session</button>
+        <button class="form-button" v-on:click="addCardsView">Manage cards</button>
+        <button class="form-button" v-on:click="matchingGame">Matching Game</button>
+        <button class="form-button" v-on:click="raceGame">Race Game</button>
     </div>
     <div id="cardform">
         <CardForm v-if="isFormDisplayed" v-bind:card="card" />
@@ -52,8 +55,17 @@ export default {
         editDeck() {
             this.$router.push({ name: 'deck-edit', params: { deckId: this.deck.deckId } })
         },
+        addCardsView() {
+            this.$router.push({ name: 'addcards', params: { deckId: this.deck.deckId } })
+        },
         cancelForm() {
             this.isFormDisplayed = false;
+        },
+        matchingGame() {
+            this.$router.push({ name: 'matching-game', params: { deckId: this.deck.deckId } })
+        },
+        raceGame() {
+            this.$router.push({ name: 'race-game', params: { deckId: this.deck.deckId } })
         },
         beginStudySession() {
             this.$router.push({ name: 'study-session', params: { deckId: this.deck.deckId } })

@@ -152,8 +152,8 @@ form input {
 .deckdetail-button-container {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
   margin: 0.5rem 5% 1rem 5%;
 }
 </style>

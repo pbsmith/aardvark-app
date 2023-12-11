@@ -63,9 +63,9 @@ namespace Capstone.Controllers
         }
 
         [HttpDelete("{cardId}/{deckId}")]
-        public ActionResult DeleteCard(JsonCard jsonCard)
+        public ActionResult DeleteCard(int cardId, int deckId)
         {
-            int numOfDeleted = cardDao.DeleteCardById(jsonCard);
+            int numOfDeleted = cardDao.DeleteCardById(cardId, deckId);
             if(numOfDeleted==1)
             {
                 return NoContent();

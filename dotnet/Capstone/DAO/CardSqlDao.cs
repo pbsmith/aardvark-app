@@ -154,7 +154,7 @@ namespace Capstone.DAO
             }
         }
 
-        public int DeleteCardById(JsonCard jsonCard)
+        public int DeleteCardById(int cardId, int deckId)
         {
             int numOfRows = 0;
 
@@ -167,8 +167,8 @@ namespace Capstone.DAO
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@card_id", jsonCard.cardId);
-                    cmd.Parameters.AddWithValue("@deck_id", jsonCard.deckId);
+                    cmd.Parameters.AddWithValue("@card_id", cardId);
+                    cmd.Parameters.AddWithValue("@deck_id", deckId);
                     numOfRows = cmd.ExecuteNonQuery();
                 }
             }
