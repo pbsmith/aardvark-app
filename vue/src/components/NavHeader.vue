@@ -1,33 +1,34 @@
 <template>
     <nav id="nav-bar-display">
         <ul id="nav-bar-ul">
-            <li id="logo">
-                <router-link v-bind:to="{ name: 'home' }">
-                    <img id="logo-img" src="../imgs/Aardvark.png" class="logo">
-                </router-link>
-            </li>
-            <li id="title">
-                <router-link v-bind:to="{ name: 'home' }">
-                    AARDVARK
-                </router-link>
-            </li>
-            <li id="search-bar">
-                <input id="search-bar-input" type="text" placeholder="Search">
-            </li>
-            <li id="spacer">
+            <div id="nav-bar-left">
+                <li id="logo">
+                    <router-link v-bind:to="{ name: 'home' }">
+                        <img id="logo-img" src="../imgs/Aardvark.png" class="logo">
+                    </router-link>
+                </li>
+                <li id="title">
+                    <router-link v-bind:to="{ name: 'home' }">
+                        AARDVARK
+                    </router-link>
+                </li>
+                <li id="search-bar">
+                    <input id="search-bar-input" type="text" placeholder="Search">
+                </li>
+            </div>
+            <div id="nav-bar-right">
+                <li id="add-button" class="button">
+                    <router-link v-bind:to="{ name: 'newdeck' }">
+                        <img src="../imgs/formImg.png" width="24" height="24">
+                    </router-link>
+                </li>
+                <li id="login" class="button">
+                    <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
 
-            </li>
-            <li id="add-button" class="button">
-                <router-link v-bind:to="{ name: 'newdeck' }">
-                    <img src="../imgs/formImg.png" width="24" height="24">
-                </router-link>
-            </li>
-            <li id="login" class="button">
-                <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
-
-                <router-link v-bind:to="{ name: 'login' }" v-else>
-                    Login</router-link>
-            </li>
+                    <router-link v-bind:to="{ name: 'login' }" v-else>
+                        Login</router-link>
+                </li>
+            </div>
         </ul>
     </nav>
 </template>
@@ -106,28 +107,54 @@ a {
 
 /** Conditional Displays */
 
-@media only screen and (max-width: 37.5rem) {
+/** 20rem = 320px */
+@media only screen and (max-width: 20rem) {
     #nav-bar-ul {
-        display: grid;
-        grid-template-columns: .25fr 1fr .25fr 1fr;
-        grid-template-areas:
-            "logo title title ..."
-            "search-bar search-bar add-button login";
+        display: flex;
+        flex-direction: column;
         gap: .25rem;
-        margin: .5rem;
+    }
+
+    #nav-bar-left {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-template-areas: 
+            "logo title"
+            "search-bar search-bar";
+    }
+
+    #nav-bar-right {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    #logo {
+        grid-area: logo;
+        align-self: center;
+        max-width: 3rem;
     }
 
     #logo-img {
-        grid-area: logo;
+        width: 100%;
     }
 
     #title {
         grid-area: title;
+        font-size: x-large;
+        align-self: center;
     }
 
     #search-bar {
         grid-area: search-bar;
         margin-bottom: .2rem;
+        justify-self: center;
+    }
+
+    #search-bar-input {
+        width: 100%;
     }
 
     #add-button {
@@ -139,52 +166,144 @@ a {
     }
 
     .button {
-        border-radius: 0.5rem;
         font-size: small;
-        background-color: #4c4e40;
-        border: 1px solid #4c4e40;
-        box-shadow: 0 0 .5rem #4c4e40;
-        color: black;
-        font-size: small;
-        justify-self: center;
     }
 
 }
 
-@media only screen and (max-width:62rem) and (min-width:37.6rem) {
+/**  42.5rem = 680px, 20rem = 320px */
+@media only screen and (max-width: 42.5rem) and (min-width:20rem){
     #nav-bar-ul {
+        display: grid;
+        grid-template-columns: 1fr .25fr;
+        grid-template-areas:
+            "nav-bar-left nav-bar-right";
+        gap: .25rem;
+        margin: .5rem;
+        padding: .5rem;
+    }
+
+    #nav-bar-left {
+        grid-area: nav-bar-left;
+        display: grid;
+        grid-template-columns: .5fr 1fr 1fr;
+        grid-template-areas: 
+            "logo title title"
+            "logo search-bar search-bar";
+        grid-column-gap: 1.5rem;
+    }
+
+    #nav-bar-right {
+        grid-area: nav-bar-right;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    #logo {
+        grid-area: logo;
+        align-self: center;
+    }
+
+    #logo-img {
+        width: 100%;
+    }
+
+    #title {
+        grid-area: title;
+    }
+
+    #search-bar {
+        grid-area: search-bar;
+        margin-bottom: .2rem;
+    }
+
+    #search-bar-input {
+        width: 80%;
+    }
+
+    #add-button {
+        grid-area: add-button;
+    }
+
+    #login {
+        grid-area: login;
+    }
+
+    .button {
+        font-size: small;
+    }
+
+}
+
+/** 62rem = 992px,  42.5rem = 680px */
+@media only screen and (max-width:62rem) and (min-width:42.5rem) {
+    #nav-bar-ul {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+    }
+
+    #search-bar-input {
+        width: 100%;
+    }
+
+    #search-bar {
+       min-width: 25vw;
+    }
+
+    #nav-bar-left {
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         align-items: center;
-        gap: 2rem;
+        gap: 1rem;
     }
 
-    #search-bar-input {
-        width: 20vw;
-    }
-
-    #spacer {
-        width:0vw;
+    #nav-bar-right {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 1rem;
     }
 }
 
+/** 62rem = 992px */
 @media only screen and (min-width: 62rem) {
 
     #nav-bar-ul {
         display: flex;
         flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+    }
+
+    #nav-bar-left {
+        display: flex;
+        flex-direction: row;
         flex-wrap: nowrap;
         align-items: center;
-        gap: 3rem;
+        gap: 1rem;
     }
-
+    
     #search-bar-input {
-        width: 30vw;
+        width: 100%;
     }
 
-    #spacer {
-        width:1vw;
+    #search-bar {
+       min-width: 30vw;
+    }
+
+    #nav-bar-right {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 1rem;
     }
 }
 </style>
