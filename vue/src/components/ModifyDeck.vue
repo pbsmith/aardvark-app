@@ -1,47 +1,35 @@
 <template>
-    <h1>Current Deck</h1>
-
-    <!--Notice the group prop is the same on both <draggable>-->
-    <draggable v-model="currentCards" tag="ul" group="meals">
-        <template #item="{ element: card }">
-            <li>{{ card }}</li>
-        </template>
+    <div>
+        <DeckDetails v-bind:deck="deck" />
+    </div>
+    <draggable :list="cards" group="card-collection">
+        <div>
+            <div class="card" v-for="card in cards" v-bind:key="card.cardId">
+                <CardDetails v-bind:card="card" />
+            </div>
+        </div>
     </draggable>
-
-    <h1>All Available Cards</h1>
-    <draggable v-model="allCards" tag="ul" group="meals">
-        <template #item="{ element: card }">
-            <li>{{ card }}</li>
-        </template>
+    <draggable class="all-cards" :list="allCards" group="card-collection">
+        <div id="all-cards" v-for="card in allCards" v-bind:key="card.cardId">
+            <CardDetails v-bind:card="card" />
+        </div>
     </draggable>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-
-const currentCards = ref([
-    'Bat wing soup',
-    'Spicy Octopus',
-    'Anything from Taco Bell',
-]);
-
-const allCards = ref([
-    'Bat wing soup',
-    'Spicy Octopus',
-    'Anything from Taco Bell',
-]);
-</script>
-
 <script>
 import CardService from '../services/CardService';
+import DeckService from '../services/DeckService';
+import CardDetails from './CardDetails.vue';
+import DeckDetails from './DeckDetails.vue';
+import { ref } from 'vue';
 
 export default {
     data() {
         return {
-            getCurrentCards: CardService.getCardsByDeckId(this.$route.params.deckId),
+            deckId: this.$route.params.deckId,
+            allCards: CardService.getAllCards
         }
     },
-<<<<<<< HEAD
     computed: {
         deck() {
             return DeckService
@@ -56,15 +44,16 @@ export default {
         cards: {
             type: Array,
             required: true
-=======
-    created: {
-        consoleLog() {
-            console.log(CardService.getAllCards(this.$route.params.deckId))
->>>>>>> e4c983a0ffb228ca0d756d665f23d1f363160f49
         }
     }
 };
 </script>
 
-
-
+<style>
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-content: space-around;
+}
+</style>

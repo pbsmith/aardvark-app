@@ -1,20 +1,15 @@
 <template>
-    <div class="cardswithBtns">
-        <div class="card-container">
-            <div class="card" :class="{ 'flipped': isFlipped }">
-                <div class="front">
-                    <h4>{{ currentCard.term }}</h4>
-                </div>
-                <div class="back">
-                    <h4>{{ currentCard.definition }}</h4>
-                </div>
+    <div >
+        <div class="card-container" @click="flipCard">
+        <div class="card" :class="{ 'flipped': isFlipped }">
+            <div class="front">
+                <h4>{{ currentCard.term }}</h4>
+            </div>
+            <div class="back">
+                <h4>{{ currentCard.definition }}</h4>
             </div>
         </div>
-        <div>
-            <button class="btn" @click="toggleIcon"><i class="pi pi-times"></i></button>
-            <button class="btn" @click="toggleIcon"><i class="pi pi-check"></i></button>
-            <button class="btn eye" @click="flipCard"><i class="pi pi-eye"></i></button>
-        </div>
+    </div>
     </div>
 </template>
   
@@ -25,8 +20,6 @@ export default {
     data() {
         return {
             isFlipped: false,
-            isWrong: false,
-            isRight: false,
         };
     },
     computed: {},
@@ -34,9 +27,7 @@ export default {
         flipCard() {
             this.isFlipped = !this.isFlipped;
         },
-        toggleIcon() {
-            this.isWrong = !this.isWrong;
-        },
+
     },
     props: ['currentCard'],
 };
@@ -49,9 +40,6 @@ export default {
     box-sizing: border-box;
 }
 
-body {
-    overflow: hidden;
-}
 /*
 .icon-wrong {
     color: #ff5555;
@@ -77,30 +65,16 @@ body {
     text-align: center;
 }
 
-.flippable {
-    transition: 0.5s;
-    transform-style: preserve-3d;
-    position: relative;
-}
 
 .card.flipped {
     transform: rotateY(180deg);
 }
 
-.cardswithBtns {
-    min-width: 12.875rem;
-    min-height: 12.25rem;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
 .card-container {
-    min-width: 12.875rem;
-    min-height: 12.25rem;
-    perspective: 800px;
-    margin-bottom: 1rem;
+    width: 40rem;
+    height: 20rem;
+    background-color: rgba(255, 0, 0, 0.075);
+
 }
 
 .card {
@@ -108,11 +82,13 @@ body {
     height: 100%;
     background-color: #6b705c;
     border-radius: 1rem;
-    box-shadow: 0 0 0.2rem 0.1rem rgba(50, 50, 50, 0.25);
     position: relative;
     transform-style: preserve-3d;
     transition: transform 1500ms;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .front,
@@ -128,10 +104,12 @@ body {
 
 .front {
     transform: rotateY(0deg);
+    font-size: 1.5rem;
 }
 
 .back {
     transform: rotateY(180deg);
+    font-size: 1.5rem;
 }
 
 .back h4 {
