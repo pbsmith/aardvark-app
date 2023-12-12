@@ -22,47 +22,30 @@
     </div>
 </template>
 
-
-<script setup>
-import { ref, onMounted } from 'vue';
-import CardService from '../services/CardService';
-const currentCards = ref([]);
-const allCards = ref([]);
-/** using async allows the use of await in the function.
- *  await prevents a syntax error
- *  await is used to wait for a promise to resolve
- *  before moving onto the next line of code
- */
-const fetchData = async () => {
-    try {
-        const response1 = await CardService.getCardsByDeckId(1);
-        currentCards.value = response1.data;
-        const response2 = await CardService.getAllCards();
-        allCards.value = response2.data;
-    } catch (error) {
-        console.error('An error occurred while fetching data:', error);
-    }
-};
-onMounted(() => fetchData())
-</script>
 <script>
+import CardService from '../services/CardService';
+import { ref } from 'vue';
+import draggable from 'vuedraggable';
+
+let currentCards = ref([]);
+let allCards = ref([]);
+
 export default {
     data() {
         return {
-<<<<<<< HEAD
-=======
-
-            oldDeck: [],
->>>>>>> 4e1b64a4af144dbcdd7512ffea716e57d4b1cd58
+            deckId: this.$route.params.deckId,
         }
     },
-    props: [],
+    props: ['oldDeck'],
+    components: {
+        draggable
+    },
     methods: {
         save(currentCards, allCards) {
             console.log('inModifyDeck, currentCards', currentCards)
             console.log('inModifyDeck, allCards', allCards)
 
-            console.log('inModifyDeck, save, oldDeck', oldDeck)
+            console.log('inModifyDeck, save, oldDeck', this.oldDeck)
 
             /** filter cards in current cards, */
             let cardsToAdd = currentCards.filter((card) => {
@@ -70,7 +53,7 @@ export default {
                  * it does not need to be added and can be filtered out
                  * includes returns true if the array does include the object
                 */
-                if (oldDeck.includes(card)) {
+                if (this.oldDeck.includes(card)) {
                     return false;
                     console.log('in ModifyDeck, oldDeck doesnt include', card)
                 }
@@ -92,7 +75,7 @@ export default {
                  * it does not need to be added and can be filtered out
                  * includes returns true if the array does include the object
                 */
-                if (oldDeck.includes(card)) {
+                if (this.oldDeck.includes(card)) {
                     return true;
                 }
                 else {
@@ -103,7 +86,25 @@ export default {
                 /*CardService.deleteCardFromDeck(card)*/
             });
             console.log('in modifyDeck cardsToDelete', cardsToDelete)
-        }
+        },
+        fetchData() {
+            try {
+                let response1 = CardService.getCardsByDeckId(this.deckId)
+                    .then(response => {
+                        currentCards = response1.data;
+                    });
+                let response2 = CardService.getAllCards()
+                    .then(response => {
+                        allCards = response2.data;
+                    });
+
+            } catch (error) {
+                console.error('An error occurred while fetching data:', error);
+            }
+        },
+    },
+    onMounted(){
+        this.fetchData();
     }
 }
 </script>
