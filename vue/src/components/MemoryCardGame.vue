@@ -1,31 +1,29 @@
 <template>
     <div id="app">
         <div class="row">
-            <div class="col-md-6 col-lg-6 col-xl-5 mx-auto">
-                <div class="row justify-content-md-center">
-                    <div v-for="card in definitions" class="col-auto mb-3 flip-container" v-bind:key="card.definition"
-                        :class="{ 'flipped': card.isFlipped }" v-on:click="flipCard(card)">
-                        <div class="memorycard">
-                            <div class="front border rounded shadow" id="front">
-                                <img width="100" height="150" src="../imgs/MemoryCardPattern.png">
-                            </div>
-                            <div class="back rounded border" id="back">
-                                <div width="100" height="150">
-                                    <p>{{ card.definition }}</p>
-                                </div>
+            <div class="allcards">
+                <div v-for="card in definitions" class="flip-container" id="cardbox" v-bind:key="card.cardId"
+                    :class="{ 'flipped': card.isFlipped }" v-on:click="flipCard(card)">
+                    <div class="memorycard">
+                        <div class="front border rounded cardcontainer" id="front">
+                            <img width="100" height="150" src="../imgs/MemoryCardPattern.png">
+                        </div>
+                        <div class="back rounded border cardcontainer" id="back">
+                            <div width="100" height="150">
+                                <p>{{ card.definition }}</p>
                             </div>
                         </div>
                     </div>
-                    <div v-for="card in terms" class="col-auto mb-3 flip-container" v-bind:key="card.term"
-                        :class="{ 'flipped': card.isFlipped }" v-on:click="flipCard(card)">
-                        <div class="memorycard">
-                            <div class="front border rounded shadow" id="front">
-                                <img width="100" height="150" src="../imgs/MemoryCardPattern.png">
-                            </div>
-                            <div class="back rounded border" id="back">
-                                <div width="100" height="150">
-                                    <p>{{ card.term }}</p>
-                                </div>
+                </div>
+                <div v-for="card in terms" class="col-auto mb-3 flip-container" id="cardbox" v-bind:key="card.cardId"
+                    :class="{ 'flipped': card.isFlipped }" v-on:click="flipCard(card)">
+                    <div class="memorycard">
+                        <div class="front border rounded shadow cardcontainer" id="front">
+                            <img width="100" height="150" src="../imgs/MemoryCardPattern.png">
+                        </div>
+                        <div class="back rounded border cardcontainer" id="back">
+                            <div width="100" height="150">
+                                <p>{{ card.term }}</p>
                             </div>
                         </div>
                     </div>
@@ -58,7 +56,7 @@ export default {
         this.allCards = this.shuffle(this.cards);
         for (let i = 0; i < this.allCards.length; i++) {
             this.definitions.push(this.allCards[i]);
-            this.terms.push(this.allCards[i]);
+            this.terms.push(Object.assign({}, this.allCards[i]));
         }
 
         /**Give all definitions and all terms the isFlipped and isMatched properties of false */
@@ -71,21 +69,9 @@ export default {
             card.isMatched = false;
         });
 
-        /*
-        let j = 1;
-        for (let i = 0; i < this.allCards.length; i++) {
-            if (i % 2 == 0) {
-                j++;
-            }
-            else {
-                this.allCardsFrTho.push(JSON.parse(`{"input":"${this.allCards[i]}", "tag":"${j}"}`))
-            }
-        }
-        this.allCardsFrTho.forEach((card) => {
-            card.isFlipped = false;
-            card.isMatched = false;
-        });
-        */
+        /**Shuffle both arrays */
+        this.definitions = this.shuffle(this.definitions)
+        this.terms = this.shuffle(this.terms)
     },
     methods: {
         shuffle(array) {
@@ -96,16 +82,31 @@ export default {
             return array;
         },
         flipCard(card) {
-            if (card.isMatched == false) {
+            /**  */
+            if (card.isMatched) {
+                card.isFlipped=true;
+            }
+            else if (card.isMatched == false && card.isFlipped == false) {
                 card.isFlipped = true;
+                if (this.flippedCards.length < 2) {
+                    this.flippedCards.push(card);
+                }
+                else if (this.flippedCards.length === 2) {
+                    this._match(card);
+                }
+            }
+            else if (card.isMatched == false && card.isFlipped == true) {
+                card.isFlipped = false;
+                if (this.flippedCards.length < 2) {
+                    this.flippedCards.push(card);
+                }
+                else if (this.flippedCards.length === 2) {
+                    this._match(card);
+                }
             }
 
-            if (this.flippedCards.length < 2) {
-                this.flippedCards.push(card);
-            }
-            if (this.flippedCards.length === 2) {
-                this._match(card);
-            }
+
+
         },
         _match(card) {
             if (this.flippedCards[0].cardId == card.cardId) {
@@ -125,13 +126,25 @@ export default {
 
 
 <style>
+.allcards {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2rem;
+}
+
+#cardbox {
+    max-height: 3rem;
+    max-width: 10rem;
+    padding: 2rem;
+}
+
 #front {
-    border: solid black;
+    border: solid #4c4e40;
     border-radius: 0.5rem;
 }
 
 #back {
-    border: solid black;
+    border: solid;
     border-radius: 0.5rem;
 }
 
