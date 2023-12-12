@@ -4,17 +4,23 @@
       <h1>--FlashCard Study Session--</h1>
       <button class="finish-study" v-on:click="completeStudySession">Finish Study Session</button>
     </div>
-    <div class="card-container-view">
+    <div v-if="!sessionCompleted" class="card-container-view">
       <StudySession v-if="cards.length > 0" :currentCard="cards[currentIndex]" class="card" />
+      <button class="centered-button" @click="prevCard" :disabled="currentIndex === 0">
+        <i class="pi pi-arrow-circle-left" style="font-size: 3rem"></i>
+      </button>
+      <button class="wrong-Icon" @click="rightCards(currentIndex)">
+        <i class="pi pi-check-circle" style="font-size: 3rem"></i>
+      </button>
+      <button class="right-Icon" @click="wrongCards(currentIndex)">
+        <i class="pi pi-times" style="font-size: 3rem"></i>
+      </button>
+      <button class="centered-button" @click="nextCard" :disabled="currentIndex === cards.length - 1">
+        <i class="pi pi-arrow-circle-right" style="font-size: 3rem"></i>
+      </button>
     </div>
-    <button class="centered-button" @click="prevCard" :disabled="currentIndex === 0"><i class="pi pi-arrow-circle-left"
-        style="font-size: 3rem"></i></button>
-    <button class="wrong-Icon" @click="rightCards(currentIndex)"><i class="pi pi-check-circle" style="font-size: 3rem"></i></button>
-    <button class="right-Icon" @click="wrongCards(currentIndex)"><i class="pi pi-times" style="font-size: 3rem"></i></button>
-    <button class="centered-button" @click="nextCard" :disabled="currentIndex === cards.length - 1"><i
-        class="pi pi-arrow-circle-right" style="font-size: 3rem"></i></button>
   </div>
-  <div class="complete-view">
+  <div v-if="sessionCompleted" class="complete-view">
     <h1>Complete Session</h1>
     <div>
       <h2>score:</h2>
@@ -36,7 +42,8 @@ export default {
   data() {
     return {
       cards: [],
-      currentIndex: 0
+      currentIndex: 0,
+      sessionCompleted: false
     };
   },
   components: {
@@ -46,9 +53,8 @@ export default {
   },
   methods: {
     completeStudySession() {
-      this.$router.push({ name: 'complete-session', params: { deckId: this.deck.deckId } })
+      this.sessionCompleted = true;
     },
-
     nextCard() {
       this.currentIndex = Math.min(this.currentIndex + 1, this.cards.length - 1);
     },
@@ -143,10 +149,15 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 150rem;
+  width: 80rem;
   background-color: none;
 }
 
+.card{
+  margin-right: 50rem;
+  margin-left: 50rem;
+
+}
 .complete-view {
   display: flex;
   justify-content: center;
