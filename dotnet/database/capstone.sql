@@ -35,7 +35,7 @@ CREATE TABLE decks (
 
 CREATE TABLE cards (
 	card_id int IDENTITY(1,1) NOT NULL,
-	term varchar(20) NOT NULL,
+	term varchar(200) NOT NULL,
 	definition varchar(300) NOT NULL,
 	user_id int NOT NULL
 	CONSTRAINT PK_card PRIMARY KEY (card_id)

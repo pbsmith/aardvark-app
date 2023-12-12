@@ -25,7 +25,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import draggable from 'vuedraggable';
 import CardService from '../services/CardService';
 const currentCards = ref([]);
 const allCards = ref([]);
@@ -46,12 +45,15 @@ const fetchData = async () => {
 };
 onMounted(() => fetchData())
 </script>
-
-
 <script>
 export default {
     data() {
         return {
+<<<<<<< HEAD
+=======
+
+            oldDeck: [],
+>>>>>>> 4e1b64a4af144dbcdd7512ffea716e57d4b1cd58
         }
     },
     props: [],
@@ -107,8 +109,10 @@ export default {
 </script>
 
 <style>
-ul {
-    list-style: none;
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-content: space-around;
 }
 </style>
-

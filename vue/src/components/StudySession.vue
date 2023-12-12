@@ -1,19 +1,18 @@
 <template>
-    <div class="cardswithBtns">
-        <div class="card-container">
-            <div class="card" :class="{ 'flipped': isFlipped }">
-                <div class="front">
-                    <h4>{{ currentCard.term }}</h4>
-                </div>
-                <div class="back">
-                    <h4>{{ currentCard.definition }}</h4>
-                </div>
+    <div @click="flipCard">
+        <div v-bind:style="{ backgroundColor: colorFront, color: colorTextFront }" v-show="!isToggle"
+            class="animated flipInX flashcard">
+            <div class="card-content center">
+                <p v-bind:style="{ fontSize: textSizeFront, fontWeight: 'bold' }">{{ currentCard.term }}</p>
             </div>
+            <div class="card-footer">{{ footerFront }}</div>
         </div>
-        <div>
-            <button class="btn" @click="toggleIcon"><i class="pi pi-times"></i></button>
-            <button class="btn" @click="toggleIcon"><i class="pi pi-check"></i></button>
-            <button class="btn eye" @click="flipCard"><i class="pi pi-eye"></i></button>
+        <div v-bind:style="{ backgroundColor: colorBack, color: colorTextBack }" v-show="isToggle"
+            class="animated flipInX flashcard">
+            <div class="card-content center">
+                <p v-bind:style="{ fontSize: textSizeBack, fontWeight: 'bold' }">{{ currentCard.definition }}</p>
+            </div>
+            <div class="card-footer">{{ footerBack }}</div>
         </div>
     </div>
 </template>
@@ -21,123 +20,112 @@
 <script>
 import 'primeicons/primeicons.css'
 export default {
-    components: {},
-    data() {
-        return {
-            isFlipped: false,
-            isWrong: false,
-            isRight: false,
-        };
+    props: {
+        currentCard: {
+            type: Object,
+        },
+        front: {
+            type: String,
+            default: 'default front',
+        },
+        back: {
+            type: String,
+            default: 'default back',
+        },
+        textSizeFront: {
+            type: String,
+            default: '2em'
+        },
+        textSizeBack: {
+            type: String,
+            default: '2em'
+        },
+        colorTextFront: {
+            type: String,
+            default: 'white'
+        },
+        colorTextBack: {
+            type: String,
+            default: 'white'
+        },
+        colorFront: {
+            type: String,
+            default: '#6b705c'
+        },
+        colorBack: {
+            type: String,
+            default: '#6b705c'
+        },
+        footerFront: {
+            type: String,
+            default: 'Click to show Back'
+        },
+        footerBack: {
+            type: String,
+            default: 'Click to show Front'
+        },
     },
-    computed: {},
+    computed: {
+        isToggle() {
+            return this.$store.state.cardFlipped 
+        },
+    },
     methods: {
         flipCard() {
-            this.isFlipped = !this.isFlipped;
-        },
-        toggleIcon() {
-            this.isWrong = !this.isWrong;
+            this.$store.commit('FLIP_CARD')
         },
     },
-    props: ['currentCard'],
-};
+}
 </script>
   
 <style scoped>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.center {
+    text-align: center;
 }
 
-body {
-    overflow: hidden;
-}
-/*
-.icon-wrong {
-    color: #ff5555;
-}
-
-.icon-right {
-    color: #55ff55;
-}
-
-.card i {
-    font-size: 3em;
-    position: absolute;
-    font-size: 8rem;
-}
-*/
-.btn {
-    width: 3rem;
-    height: 2rem;
-    border-radius: .3rem;
-    margin-left: 1rem;
+.flashcard {
     cursor: pointer;
-    font-size: 1.2rem;
-    text-align: center;
-}
-
-.flippable {
-    transition: 0.5s;
-    transform-style: preserve-3d;
-    position: relative;
-}
-
-.card.flipped {
-    transform: rotateY(180deg);
-}
-
-.cardswithBtns {
-    min-width: 12.875rem;
-    min-height: 12.25rem;
+    border-radius: 10px;
+    margin: .5rem;
     padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.card-container {
-    min-width: 12.875rem;
-    min-height: 12.25rem;
-    perspective: 800px;
-    margin-bottom: 1rem;
-}
-
-.card {
-    width: 100%;
-    height: 100%;
-    background-color: #6b705c;
-    border-radius: 1rem;
-    box-shadow: 0 0 0.2rem 0.1rem rgba(50, 50, 50, 0.25);
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 1500ms;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4);
     text-align: center;
+    width: 45rem;
+    height: 15rem;
 }
 
-.front,
-.back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.animated {
+    animation-duration: 0.75s;
+    animation-fill-mode: both;
 }
 
-.front {
-    transform: rotateY(0deg);
+@keyframes flipInX {
+    from {
+        transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
+        animation-timing-function: ease-in;
+        opacity: 0;
+    }
+
+    40% {
+        transform: perspective(400px) rotate3d(1, 0, 0, -10deg);
+        animation-timing-function: ease-in;
+    }
+
+    60% {
+        transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
+        opacity: 1;
+    }
+
+    80% {
+        transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
+    }
+
+    to {
+        transform: perspective(400px);
+    }
 }
 
-.back {
-    transform: rotateY(180deg);
-}
-
-.back h4 {
-    margin: 1rem;
-    color: white;
-}
-</style>
-
-  
+.flipInX {
+    backface-visibility: visible !important;
+    animation-name: flipInX;
+}</style>
