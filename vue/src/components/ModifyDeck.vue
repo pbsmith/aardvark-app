@@ -1,7 +1,7 @@
 <template>
-    <div >
+    <div>
         <h1>Current Deck</h1>
-        <button v-on:click="save(currentCards, allCards)">Save</button>
+        <button class="form-button" v-on:click="save(currentCards, allCards)">Save</button>
         <draggable id="draggable" v-model="currentCards" tag="ul" group="meals" item-key="card.cardId">
             <template #item="{ element: card }">
                 <li class="cardcontainer">
@@ -25,7 +25,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import draggable from 'vuedraggable';
 import CardService from '../services/CardService';
 const currentCards = ref([]);
 const allCards = ref([]);
@@ -46,54 +45,74 @@ const fetchData = async () => {
 };
 onMounted(() => fetchData())
 </script>
-
-
 <script>
 export default {
     data() {
         return {
+<<<<<<< HEAD
+=======
+
             oldDeck: [],
+>>>>>>> 4e1b64a4af144dbcdd7512ffea716e57d4b1cd58
         }
     },
+    props: [],
     methods: {
         save(currentCards, allCards) {
-            console.log(currentCards)
-            currentCards.filter((card) => {
-                this.oldDeck.forEach((c) => {
-                    if (card != c) {
-                        console.log('foreach loop',card)
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
-                })
+            console.log('inModifyDeck, currentCards', currentCards)
+            console.log('inModifyDeck, allCards', allCards)
+
+            console.log('inModifyDeck, save, oldDeck', oldDeck)
+
+            /** filter cards in current cards, */
+            let cardsToAdd = currentCards.filter((card) => {
+                /** if the old deck includes the card,
+                 * it does not need to be added and can be filtered out
+                 * includes returns true if the array does include the object
+                */
+                if (oldDeck.includes(card)) {
+                    return false;
+                    console.log('in ModifyDeck, oldDeck doesnt include', card)
+                }
+                else {
+                    return true;
+                    console.log('in ModifyDeck, oldDeck does include', card)
+                }
+
             }).forEach((card) => {
-                CardService.addCardToDeck(card)
+                console.log('in ModifyDeck add card', card)
+                /*card.deckId = this.$route.params.deckId
+                CardService.addCardToDeck(card)*/
+
             });
-            allCards.filter((card) => {
-                this.oldDeck.forEach((c) => {
-                    if (card == c) {
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
-                })
+            console.log('in modifyDeck cardsToAdd', cardsToAdd)
+
+            let cardsToDelete = allCards.filter((card) => {
+                /** if the old deck includes the card,
+                 * it does not need to be added and can be filtered out
+                 * includes returns true if the array does include the object
+                */
+                if (oldDeck.includes(card)) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+
             }).forEach((card) => {
-                CardService.deleteCardFromDeck(card)
+                /*CardService.deleteCardFromDeck(card)*/
             });
-        },
-        getCardsByDeckId() {
-            this.oldDeck = CardService.getCardsByDeckId(this.$route.params.deckId);
+            console.log('in modifyDeck cardsToDelete', cardsToDelete)
         }
     }
 }
 </script>
 
 <style>
-ul {
-    list-style: none;
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-content: space-around;
 }
 </style>
-

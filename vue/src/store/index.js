@@ -1,37 +1,49 @@
-import { createStore as _createStore } from 'vuex';
+import { createStore as _createStore } from "vuex";
 const NOTIFICATION_TIMEOUT = 6000;
-import axios from 'axios';
+import axios from "axios";
 
 export function createStore(currentToken, currentUser) {
   let store = _createStore({
     state: {
-      token: currentToken || '',
+      token: currentToken || "",
       user: currentUser || {},
-      notification: null
+      notification: null,
+      cardFlipped: false,
+      rightAnswers:[],
+      wrongAnswers:[]
+    },
+    getters: {    
+      rightAnswers(state) {
+        return state.rightAnswers;
+      },
+    
+      wrongAnswers(state) {
+        return state.wrongAnswers;
+      },
     },
     mutations: {
       SET_NOTIFICATION(state, notification) {
         // Clear the current notification if one exists
         if (state.notification) {
-          this.commit('CLEAR_NOTIFICATION');
+          this.commit("CLEAR_NOTIFICATION");
         }
-        if (typeof notification === 'string') {
+        if (typeof notification === "string") {
           // If only a string was sent, create a notification object with defaults
           notification = {
             message: notification,
-            type: 'error',
-            timeout: NOTIFICATION_TIMEOUT
-          }
+            type: "error",
+            timeout: NOTIFICATION_TIMEOUT,
+          };
         } else {
           // Else add default values if needed
-          notification.type = notification.type || 'error';
+          notification.type = notification.type || "error";
           notification.timeout = notification.timeout || NOTIFICATION_TIMEOUT;
         }
         // Set the notification in state
         state.notification = notification;
         // Clear the message after timeout (see https://developer.mozilla.org/en-US/docs/Web/API/setTimeout)
         notification.timer = window.setTimeout(() => {
-          this.commit('CLEAR_NOTIFICATION');
+          this.commit("CLEAR_NOTIFICATION");
         }, notification.timeout);
       },
       CLEAR_NOTIFICATION(state) {
@@ -42,20 +54,35 @@ export function createStore(currentToken, currentUser) {
       },
       SET_AUTH_TOKEN(state, token) {
         state.token = token;
-        localStorage.setItem('token', token);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        localStorage.setItem("token", token);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       },
       SET_USER(state, user) {
         state.user = user;
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify(user));
       },
       LOGOUT(state) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        state.token = '';
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        state.token = "";
         state.user = {};
         axios.defaults.headers.common = {};
-      }
+      },
+      FLIP_CARD(state) {
+        state.cardFlipped = !state.cardFlipped;
+      },
+      WRONG_CARD(state, card) {
+        state.wrongAnswers.push(card);
+      },
+    
+      RIGHT_CARD(state, card) {
+        state.rightAnswers.push(card);
+      },
+    
+      resetAnswerArrays(state) {
+        state.rightAnswers = [];
+        state.wrongAnswers = [];
+      },
     },
   });
   return store;
