@@ -50,14 +50,6 @@ const routes = [
     }
   },
   {
-    path: '/deck/:deckId/complete-session',
-    name: 'complete-session',
-    component: CompleteSessionView,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
     path: '/deck/edit/:deckId',
     name: 'deck-edit',
     component: EditDeckView,
