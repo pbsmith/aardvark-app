@@ -10,7 +10,6 @@ import RegisterView from '../views/RegisterView.vue';
 import DeckDetailView from '../views/DeckDetailView.vue';
 import EditDeckView from '../views/EditDeckView.vue';
 import StudySessionView from '../views/StudySessionView.vue';
-import CompleteSessionView from '../views/CompleteSessionView.vue';
 import AddCardsView from '../views/AddCardsView.vue';
 import MemoryCardView from '../views/MemoryCardView.vue';
 import RaceGameView from '../views/RaceGameView.vue';
