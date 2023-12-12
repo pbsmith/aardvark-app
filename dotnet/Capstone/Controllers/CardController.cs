@@ -47,7 +47,7 @@ namespace Capstone.Controllers
         }
 
         [HttpPut("{cardId}")]
-        public ActionResult<Card> Card(int cardId, Card changedCard)
+        public ActionResult<Card> Card(Card changedCard)
         {
             Card newCard = cardDao.UpdateCard(changedCard);
 
@@ -62,10 +62,10 @@ namespace Capstone.Controllers
 
         }
 
-        [HttpDelete("{cardId}")]
-        public ActionResult DeleteCard(int id)
+        [HttpDelete("{cardId}/{deckId}")]
+        public ActionResult DeleteCard(int cardId, int deckId)
         {
-            int numOfDeleted = cardDao.DeleteCardById(id);
+            int numOfDeleted = cardDao.DeleteCardById(cardId, deckId);
             if(numOfDeleted==1)
             {
                 return NoContent();

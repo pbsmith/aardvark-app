@@ -1,52 +1,92 @@
 <template>
-    <div>
-        <DeckDetails v-bind:deck="deck" />
+    <div >
+        <h1>Current Deck</h1>
+        <button v-on:click="save(currentCards, allCards)">Save</button>
+        <draggable id="draggable" v-model="currentCards" tag="ul" group="meals" item-key="card.cardId">
+            <template #item="{ element: card }">
+                <li class="cardcontainer">
+                    <p>{{ card.term }}</p>
+                    <p>{{ card.definition }}</p>
+                </li>
+            </template>
+        </draggable>
+        <h1>All Available Cards</h1>
+        <draggable v-model="allCards" tag="ul" group="meals" item-key="card.cardId">
+            <template #item="{ element: card }">
+                <li class="cardcontainer">
+                    <p>{{ card.term }}</p>
+                    <p>{{ card.definition }}</p>
+                </li>
+            </template>
+        </draggable>
     </div>
-    <draggable :list="cards" group="card-collection">
-        <div>
-            <div class="card" v-for="card in cards" v-bind:key="card.cardId">
-                <CardDetails v-bind:card="card" />
-            </div>
-        </div>
-    </draggable>
-    <draggable class="all-cards" :list="allCards" group="card-collection">
-        <div id="all-cards" v-for="card in allCards" v-bind:key="card.cardId">
-            <CardDetails v-bind:card="card" />
-        </div>
-    </draggable>
 </template>
 
-<script>
-import CardService from '../services/CardService';
-import DeckService from '../services/DeckService';
-import CardDetails from './CardDetails.vue';
-import DeckDetails from './DeckDetails.vue';
-import { ref } from 'vue';
 
+<script setup>
+import { ref, onMounted } from 'vue';
+import CardService from '../services/CardService';
+const currentCards = ref([]);
+const allCards = ref([]);
+/** using async allows the use of await in the function.
+ *  await prevents a syntax error
+ *  await is used to wait for a promise to resolve
+ *  before moving onto the next line of code
+ */
+const fetchData = async () => {
+    try {
+        const response1 = await CardService.getCardsByDeckId(1);
+        currentCards.value = response1.data;
+        const response2 = await CardService.getAllCards();
+        allCards.value = response2.data;
+    } catch (error) {
+        console.error('An error occurred while fetching data:', error);
+    }
+};
+onMounted(() => fetchData())
+</script>
+<script>
 export default {
     data() {
         return {
-            deckId: this.$route.params.deckId,
-            allCards: CardService.getAllCards
+
+            oldDeck: [],
         }
     },
-    computed: {
-        deck() {
-            return DeckService
-                .getDeckById(this.deckId)
-        }
-    },
-    components: {
-        CardDetails,
-        DeckDetails,
-    },
-    props: {
-        cards: {
-            type: Array,
-            required: true
+    methods: {
+        save(currentCards, allCards) {
+            console.log(currentCards)
+            currentCards.filter((card) => {
+                this.oldDeck.forEach((c) => {
+                    if (card != c) {
+                        console.log('foreach loop',card)
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                })
+            }).forEach((card) => {
+                CardService.addCardToDeck(card)
+            });
+            allCards.filter((card) => {
+                this.oldDeck.forEach((c) => {
+                    if (card == c) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                })
+            }).forEach((card) => {
+                CardService.deleteCardFromDeck(card)
+            });
+        },
+        getCardsByDeckId() {
+            this.oldDeck = CardService.getCardsByDeckId(this.$route.params.deckId);
         }
     }
-};
+}
 </script>
 
 <style>

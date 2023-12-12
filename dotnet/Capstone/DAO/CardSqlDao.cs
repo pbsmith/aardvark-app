@@ -20,36 +20,36 @@ namespace Capstone.DAO
 
         public List<Card> GetAllCards()
         {
-                List<Card> cards = new List<Card>();
+            List<Card> cards = new List<Card>();
 
-                string sql = "SELECT card_id, term, definition, user_id " +
-                "FROM cards";
+            string sql = "SELECT card_id, term, definition, user_id " +
+            "FROM cards";
 
-                try
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
-                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
                     {
-                        conn.Open();
-
-                        SqlCommand cmd = new SqlCommand(sql, conn);
-                        SqlDataReader reader = cmd.ExecuteReader();
-
-                        while (reader.Read())
-                        {
-                            Card card = MapRowToCard(reader);
-                            cards.Add(card);
-                        }
+                        Card card = MapRowToCard(reader);
+                        cards.Add(card);
                     }
                 }
-                catch (SqlException ex)
-                {
-                    throw new DaoException("SQL exception occurred", ex);
-                }
-
-                return cards;
+            }
+            catch (SqlException ex)
+            {
+                throw new DaoException("SQL exception occurred", ex);
             }
 
-            public List<Card> GetCardsByDeckId(int deckId)
+            return cards;
+        }
+
+        public List<Card> GetCardsByDeckId(int deckId)
         {
             List<Card> cards = new List<Card>();
 
@@ -154,24 +154,25 @@ namespace Capstone.DAO
             }
         }
 
-        public int DeleteCardById(int cardId)
+        public int DeleteCardById(int cardId, int deckId)
         {
             int numOfRows = 0;
 
-            string sql = "DELETE FROM cards WHERE card_id=@card_id";
+            string sql = "DELETE FROM cardxdeck WHERE card_id=@card_id AND deck_id=@deck_id";
 
             try
             {
-                using(SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
 
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@card_id", cardId);
+                    cmd.Parameters.AddWithValue("@deck_id", deckId);
                     numOfRows = cmd.ExecuteNonQuery();
                 }
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 throw new DaoException("Sql Exception Occurred", ex);
             }

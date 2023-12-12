@@ -10,7 +10,10 @@ import RegisterView from '../views/RegisterView.vue';
 import DeckDetailView from '../views/DeckDetailView.vue';
 import EditDeckView from '../views/EditDeckView.vue';
 import StudySessionView from '../views/StudySessionView.vue';
-import ModifyDeckView from '../views/ModifyDeckView.vue';
+import CompleteSessionView from '../views/CompleteSessionView.vue';
+import AddCardsView from '../views/AddCardsView.vue';
+import MemoryCardView from '../views/MemoryCardView.vue';
+import RaceGameView from '../views/RaceGameView.vue';
 
 
 /**
@@ -47,6 +50,14 @@ const routes = [
     }
   },
   {
+    path: '/deck/:deckId/complete-session',
+    name: 'complete-session',
+    component: CompleteSessionView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/deck/edit/:deckId',
     name: 'deck-edit',
     component: EditDeckView,
@@ -63,9 +74,9 @@ const routes = [
     }
   },
   {
-    path: '/modifydeck/:deckId',
-    name: 'modifydeck',
-    component: ModifyDeckView,
+    path: '/addcards/:deckId',
+    name: 'addcards',
+    component: AddCardsView,
     meta: {
       requiresAuth: true
     }
@@ -77,6 +88,22 @@ const routes = [
     component: LoginView,
     meta: {
       requiresAuth: false
+    }
+  },
+  {
+    path: "/deck/matching/:deckId",
+    name: "matching-game",
+    component: MemoryCardView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/deck/race/:deckId",
+    name: "race-game",
+    component: RaceGameView,
+    meta: {
+      requiresAuth: true
     }
   },
   {
