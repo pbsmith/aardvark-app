@@ -49,11 +49,6 @@ onMounted(() => fetchData())
 export default {
     data() {
         return {
-<<<<<<< HEAD
-=======
-
-            oldDeck: [],
->>>>>>> 4e1b64a4af144dbcdd7512ffea716e57d4b1cd58
         }
     },
     props: [],

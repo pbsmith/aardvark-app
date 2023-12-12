@@ -9,17 +9,6 @@ export function createStore(currentToken, currentUser) {
       user: currentUser || {},
       notification: null,
       cardFlipped: false,
-      rightAnswers:[],
-      wrongAnswers:[]
-    },
-    getters: {    
-      rightAnswers(state) {
-        return state.rightAnswers;
-      },
-    
-      wrongAnswers(state) {
-        return state.wrongAnswers;
-      },
     },
     mutations: {
       SET_NOTIFICATION(state, notification) {
@@ -70,15 +59,7 @@ export function createStore(currentToken, currentUser) {
       },
       FLIP_CARD(state) {
         state.cardFlipped = !state.cardFlipped;
-      },
-      WRONG_CARD(state, card) {
-        state.wrongAnswers.push(card);
-      },
-    
-      RIGHT_CARD(state, card) {
-        state.rightAnswers.push(card);
-      },
-    
+      },   
       resetAnswerArrays(state) {
         state.rightAnswers = [];
         state.wrongAnswers = [];
