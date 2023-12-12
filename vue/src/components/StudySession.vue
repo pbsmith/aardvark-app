@@ -42,7 +42,7 @@ export default {
         },
         colorTextFront: {
             type: String,
-            default: 'white'
+            default: 'black'
         },
         colorTextBack: {
             type: String,

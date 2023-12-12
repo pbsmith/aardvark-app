@@ -33,7 +33,10 @@ let allCards = ref([]);
 export default {
     data() {
         return {
+<<<<<<< HEAD
             deckId: this.$route.params.deckId,
+=======
+>>>>>>> 4e9f0fce1303f3ffcc6e67c0d29927ffd642542d
         }
     },
     props: ['oldDeck'],

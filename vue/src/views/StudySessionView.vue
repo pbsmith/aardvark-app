@@ -1,29 +1,37 @@
 <template>
-  <div class="flashcard-view">
+  <div v-if="!sessionCompleted" class="flashcard-view">
     <div class="nav">
       <h1>--FlashCard Study Session--</h1>
       <button class="finish-study" v-on:click="completeStudySession">Finish Study Session</button>
     </div>
     <div class="card-container-view">
       <StudySession v-if="cards.length > 0" :currentCard="cards[currentIndex]" class="card" />
+      <button class="centered-button" @click="prevCard" :disabled="currentIndex === 0">
+        <i class="pi pi-arrow-circle-left" style="font-size: 3rem"></i>
+      </button>
+      <button class="wrong-Icon" @click="rightCard(cards[currentIndex])">
+        <i class="pi pi-check-circle" style="font-size: 3rem"></i>
+      </button>
+      <button class="right-Icon" @click="wrongCard(cards[currentIndex])">
+        <i class="pi pi-times" style="font-size: 3rem"></i>
+      </button>
+      <button class="centered-button" @click="nextCard" :disabled="currentIndex === cards.length - 1">
+        <i class="pi pi-arrow-circle-right" style="font-size: 3rem"></i>
+      </button>
     </div>
-    <button class="centered-button" @click="prevCard" :disabled="currentIndex === 0"><i class="pi pi-arrow-circle-left"
-        style="font-size: 3rem"></i></button>
-    <button class="wrong-Icon" @click="rightCards(currentIndex)"><i class="pi pi-check-circle" style="font-size: 3rem"></i></button>
-    <button class="right-Icon" @click="wrongCards(currentIndex)"><i class="pi pi-times" style="font-size: 3rem"></i></button>
-    <button class="centered-button" @click="nextCard" :disabled="currentIndex === cards.length - 1"><i
-        class="pi pi-arrow-circle-right" style="font-size: 3rem"></i></button>
   </div>
-  <div class="complete-view">
-    <h1>Complete Session</h1>
-    <div>
-      <h2>score:</h2>
-    </div>
-    <div>
-      <h2>Right: {{ numberOfRightAnswers }}</h2>
-    </div>
-    <div>
-      <h2>Wrong: {{ numberOfWrongAnswers }}</h2>
+  <div class="complete-study">
+    <div v-if="sessionCompleted" class="complete-view">
+      <h1>Complete Session</h1>
+      <div>
+        <h2>Score:     {{ score() }}</h2>
+      </div>
+      <div>
+        <h2>Right: {{ rightCards.length }}</h2>
+      </div>
+      <div>
+        <h2>Wrong: {{ wrongCards.length }}</h2>
+      </div>
     </div>
   </div>
 </template>
@@ -36,7 +44,10 @@ export default {
   data() {
     return {
       cards: [],
-      currentIndex: 0
+      currentIndex: 0,
+      wrongCards: [],
+      rightCards: [],
+      sessionCompleted: false
     };
   },
   components: {
@@ -46,20 +57,30 @@ export default {
   },
   methods: {
     completeStudySession() {
-      this.$router.push({ name: 'complete-session', params: { deckId: this.deck.deckId } })
+      this.sessionCompleted = true;
     },
-
     nextCard() {
       this.currentIndex = Math.min(this.currentIndex + 1, this.cards.length - 1);
     },
     prevCard() {
       this.currentIndex = Math.max(this.currentIndex - 1, 0);
     },
-    rightCards(currentIndex) {
-      this.$store.commit('RIGHT_CARD')
+    rightCard(currentIndex) {
+      this.rightCards.push(currentIndex)
+      this.currentIndex = Math.min(this.currentIndex + 1, this.cards.length - 1)
+      console.log(currentIndex);
     },
-    wrongCards(currentIndex) {
-      this.$store.commit('WRONG_CARD')
+    wrongCard(currentIndex) {
+      this.wrongCards.push(currentIndex)
+      this.currentIndex = Math.min(this.currentIndex + 1, this.cards.length - 1)
+      console.log(currentIndex);
+    },
+    score() {
+      const allCards = this.cards.length;
+      const answered = this.rightCards.length + this.wrongCards.length;
+      const score = ((answered / allCards) * 100) 
+      console.log(allCards)
+      return `${score}%`;
     },
 
     getCards() {
@@ -94,6 +115,12 @@ export default {
 .nav {
   display: flex;
   justify-content: space-between;
+}
+
+.complete-study {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .centered-button {
@@ -143,8 +170,14 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 150rem;
+  width: 80rem;
   background-color: none;
+}
+
+.card {
+  margin-right: 50rem;
+  margin-left: 50rem;
+
 }
 
 .complete-view {
@@ -154,7 +187,7 @@ h1 {
   flex-direction: column;
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4);
   background-color: #6b705c;
-
+  width: 80rem;
 }
 </style>
   
