@@ -13,6 +13,8 @@ import StudySessionView from '../views/StudySessionView.vue';
 import AddCardsView from '../views/AddCardsView.vue';
 import MemoryCardView from '../views/MemoryCardView.vue';
 import RaceGameView from '../views/RaceGameView.vue';
+import ContactView from '../views/ContactView.vue';
+import AboutView from '../views/AboutView.vue';
 
 
 /**
@@ -30,6 +32,22 @@ const routes = [
     component: HomeView,
     meta: {
       requiresAuth: true
+    }
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    component: ContactView,
+    meta: {
+      requiresAuth: false
+    }
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: AboutView,
+    meta: {
+      requiresAuth: false
     }
   },
   {

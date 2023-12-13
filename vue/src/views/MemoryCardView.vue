@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button v-on:click="startGame" v-if="!isStarted">Start</button>
+        <button class="form-button" v-on:click="startGame" v-if="!isStarted">Start</button>
     </div>
     <div>
         <MemoryCardGame v-if="isStarted" v-bind:cards="cards"/>

@@ -79,7 +79,6 @@ export default {
     display: flex;
     justify-content: center;
     height: fit-content;
-    font-family: "Poppins", sans-serif;
 }
 
 #login-link:hover{

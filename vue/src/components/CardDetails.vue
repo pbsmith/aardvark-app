@@ -1,8 +1,8 @@
 <template>
     <div class="cardcontainer">
-        <div>
-            <p>{{ currentCard.term }}</p>
-            <p>{{ currentCard.definition }}</p>
+        <div id="card-details-container">
+            <p id="card-details-term">{{ currentCard.term }}</p>
+            <p id="card-details-definition">{{ currentCard.definition }}</p>
         </div>
         <div id="card-edit-buttons">
             <div id="edit-buttons">
@@ -60,3 +60,21 @@ export default {
         ['currentCard']
 }
 </script>
+
+<style>
+#card-details-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+
+#card-details-term {
+    justify-content: left;
+    margin-right: 2rem;
+}
+
+#card-details-definition {
+    justify-content: right;
+}
+</style>

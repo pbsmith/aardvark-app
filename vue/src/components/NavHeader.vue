@@ -17,6 +17,8 @@
                 </li>
             </div>
             <div id="nav-bar-right">
+                <li class="button"><router-link class="link" :to="{ name: 'about' }">About</router-link></li>
+                <li class="button"><router-link class="link" :to="{ name: 'contact' }">Contact</router-link></li>
                 <li id="add-button" class="button">
                     <router-link v-bind:to="{ name: 'newdeck' }">
                         <img src="../imgs/formImg.png" width="24" height="24">
@@ -45,8 +47,8 @@ export default {
     font-size: xx-large;
     font-weight: bold;
     letter-spacing: .1rem;
-    text-shadow: .05rem .05rem .2rem rgba(0, 0, 0, 0.7);
-    color: #ddbea9;
+    text-shadow: .05rem .05rem 1rem #2D1800;
+
 }
 
 #logo-img {
@@ -59,10 +61,9 @@ export default {
     padding: .5rem;
     border-radius: 0.5rem;
     font-size: large;
-    background-color: #4c4e40;
-    border: 1px solid #4c4e40;
-    box-shadow: 0 0 .5rem #4c4e40;
-    color: black;
+    background-color: #1C0B00;
+    border: 1px solid #1C0B00;
+    box-shadow: 0 0 .5rem #2D1800;
 }
 
 #login {
@@ -70,22 +71,22 @@ export default {
 }
 
 .button:hover {
-    background-color: #6b705c;
+    background-color: #2D1800;
 }
 
 #search-bar-input {
     border-radius: 0.5rem;
 
     height: 2.5rem;
-    border: 1px solid #4c4e40;
-    background-color: #b7b7a4;
+    border: 1px solid #2D1800;
+    background-color: #E5AC65;
     font-weight: bold;
-    box-shadow: 0 0 .5rem #4c4e40;
+    box-shadow: 0 0 .5rem #2D1800;
 }
 
 a {
     text-decoration: none;
-    color: black;
+    color: #E5AC65;
 }
 
 /** Nav Bar Styling */
@@ -96,7 +97,7 @@ a {
     left: 0;
     right: 0;
 
-    background-color: #6b705c;
+    background-color: #262a13;
     font-size: medium;
 }
 
@@ -118,7 +119,7 @@ a {
     #nav-bar-left {
         display: grid;
         grid-template-columns: auto auto;
-        grid-template-areas: 
+        grid-template-areas:
             "logo title"
             "search-bar search-bar";
     }
@@ -172,7 +173,7 @@ a {
 }
 
 /**  42.5rem = 680px, 20rem = 320px */
-@media only screen and (max-width: 42.5rem) and (min-width:20rem){
+@media only screen and (max-width: 42.5rem) and (min-width:20rem) {
     #nav-bar-ul {
         display: grid;
         grid-template-columns: 1fr .25fr;
@@ -187,7 +188,7 @@ a {
         grid-area: nav-bar-left;
         display: grid;
         grid-template-columns: .5fr 1fr 1fr;
-        grid-template-areas: 
+        grid-template-areas:
             "logo title title"
             "logo search-bar search-bar";
         grid-column-gap: 1.5rem;
@@ -252,7 +253,7 @@ a {
     }
 
     #search-bar {
-       min-width: 25vw;
+        min-width: 25vw;
     }
 
     #nav-bar-left {
@@ -289,13 +290,13 @@ a {
         align-items: center;
         gap: 1rem;
     }
-    
+
     #search-bar-input {
         width: 100%;
     }
 
     #search-bar {
-       min-width: 30vw;
+        min-width: 30vw;
     }
 
     #nav-bar-right {
