@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div class="d-flex flex-row justify-content-center py-3">
-            <div class="turns p-3"><span class="btn btn-info">Turns : <span class="badge"
+        <div class="flex-top">
+            <div><span class="form-button-mock">Turns : <span class="badge"
                         :class="finish ? 'badge-success' : 'badge-light'">{{ turns }}</span> </span></div>
-            <div class="totalTime p-3"><span class="btn btn-info">Total Time : <span class="badge"
+            <div><span class="form-button-mock">Total Time : <span class="badge"
                         :class="finish ? 'badge-success' : 'badge-light'">{{ min }} : {{ sec }}</span></span></div>
-            <div class="totalTime p-3"><button class="btn btn-info" @click="reset" :disabled="!start">Restart</button></div>
+            <div><button class="form-button" @click="reset" :disabled="!start">Restart</button></div>
         </div>
             <div class="allcards">
                 <h1 id="definition-header">Definitions</h1>
@@ -208,6 +208,20 @@ export default {
 
 
 <style>
+.flex-top {
+    display: flex;
+}
+
+.form-button-mock {
+    margin: 1rem 1rem .5rem 1rem;
+  padding: .5rem 1rem .5rem 1rem;
+  background-color: #b7b7a4;
+
+  border-radius: .5rem;
+  border: .05rem solid #b7b7a4;
+  box-shadow: 0 0 .25rem #4c4e40;
+}
+
 #term-header, #definition-header{
     justify-content: center;
 }
@@ -255,6 +269,7 @@ export default {
     height: 10rem;
     background-size: contain;
     background-color: #ffe8d6;
+    padding: 1rem;
 }
 
 #back {
@@ -268,6 +283,7 @@ export default {
     width: 12rem;
     height: 10rem;
     background-color: #ffe8d6;
+    padding: 1rem;
 }
 
 /** Below is the CSS for making memory cards flip 
