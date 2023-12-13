@@ -7,11 +7,11 @@
     </div>
 
     <!--Display game if enough cards-->
-    <div v-if="isPlayable && !isOutOfCards">
+    <div v-if="isPlayable && !isOutOfCards" class="race-container">
         <h2>Score: {{ cardsCorrect }}/{{ totalCards }}</h2>
         <div class="termCard">
             <h2>Current Card</h2>
-            <div class="cardcontainer">
+            <div id="race-correct-card" class="cardcontainer">
                 {{ correctCard.term }}
                 {{ correctCard.cardId }}
             </div>
@@ -26,16 +26,15 @@
             </div>
         </div>
 
-        <div class="possibleDefinitions">
-            <h2>Definitions</h2>
-            <div v-if="!isAnswerRight && !isAnswerWrong">
-                <div class="cardcontainer" v-on:click="checkAnswer(card)" v-for="card in roundCards"
+        <div>
+            <h2 class="card-race-h2">Definitions</h2>
+            <div v-if="!isAnswerRight && !isAnswerWrong" class="possible-definitions slide">
+                <div class="cardcontainer race-definitions" v-on:click="checkAnswer(card)" v-for="card in roundCards"
                     v-bind:key="card.cardId">
                     {{ card.definition }}
                     {{ card.cardId }}
                 </div>
             </div>
-
         </div>
     </div>
     <div v-if="isOutOfCards">
@@ -182,5 +181,29 @@ export default {
 
 .popUp {
     font-size: xx-large;
+}
+
+.possible-definitions {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.race-definitions {
+    width: 10rem;
+}
+
+#race-correct-card {
+    width: fit-content;
+    padding: 1rem;
+}
+
+/** Card Movement */
+.slide:is() {
+    transform: translateX(10rem);
+}
+
+.slide {
+    transition: all 1.5s linear;
 }
 </style>

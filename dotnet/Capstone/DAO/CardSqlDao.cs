@@ -180,6 +180,37 @@ namespace Capstone.DAO
             return numOfRows;
         }
 
+        public int AddCardToDeck(int cardId, int deckId)
+        {
+            int resultDeckId;
+
+            string sql2 = "INSERT INTO cardxdeck(deck_id, card_id) " +
+                "OUTPUT INSERTED.card_id " +
+                "VALUES (@deck_id, @card_id)";
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    
+
+                    using (SqlCommand cmd = new SqlCommand(sql2, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@card_id", cardId);
+                        cmd.Parameters.AddWithValue("@deck_id", deckId);
+                        resultDeckId = (int)cmd.ExecuteScalar();
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                throw new DaoException("SQL exception occurred", ex);
+            }
+
+            return resultDeckId;
+
+        }
+
         private Card MapRowToCard(SqlDataReader reader)
         {
             Card card = new Card();

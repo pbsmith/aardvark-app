@@ -8,7 +8,7 @@ export default {
   },
 
   addCardToDeck(card) {
-    return axios.post(`/card/${card.cardId}/${card.deckId}`)
+    return axios.post(`/card/${card.cardId}/${card.deckId}`, card)
   },
 
   getCardsByDeckId(deckId){

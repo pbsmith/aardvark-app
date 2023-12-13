@@ -46,6 +46,20 @@ namespace Capstone.Controllers
             return Created($"/card/{added.cardId}", added);
         }
 
+        [HttpPost("{cardId}/{deckId}")]
+        public ActionResult<int> AddCardToDeck(JsonCard card)
+        {
+            int result = cardDao.AddCardToDeck(card.cardId, card.deckId); 
+            if (result == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok();
+            }
+        }
+
         [HttpPut("{cardId}")]
         public ActionResult<Card> Card(Card changedCard)
         {
