@@ -1,35 +1,46 @@
 <template>
-    <div id="app">
-        <div class="row">
+    <div>
+        <div class="d-flex flex-row justify-content-center py-3">
+            <div class="turns p-3"><span class="btn btn-info">Turns : <span class="badge"
+                        :class="finish ? 'badge-success' : 'badge-light'">{{ turns }}</span> </span></div>
+            <div class="totalTime p-3"><span class="btn btn-info">Total Time : <span class="badge"
+                        :class="finish ? 'badge-success' : 'badge-light'">{{ min }} : {{ sec }}</span></span></div>
+            <div class="totalTime p-3"><button class="btn btn-info" @click="reset" :disabled="!start">Restart</button></div>
+        </div>
             <div class="allcards">
-                <div v-for="card in definitions" class="flip-container" id="cardbox" v-bind:key="card.cardId"
-                    :class="{ 'flipped': card.isFlipped }" v-on:click="flipCard(card)">
-                    <div class="memorycard">
-                        <div class="front border rounded cardcontainer" id="front">
-                            <img width="100" height="150" src="../imgs/MemoryCardPattern.png">
-                        </div>
-                        <div class="back rounded border cardcontainer" id="back">
-                            <div width="100" height="150">
-                                <p>{{ card.definition }}</p>
+                <h1 id="definition-header">Definitions</h1>
+                <div id="definition-cardbox">
+                    <div v-for="card in definitions" class="flip-container cardbox" v-bind:key="card.cardId"
+                        :class="{ 'flipped': card.isFlipped, 'matched': card.isMatched }" v-on:click="flipCard(card)">
+                        <div class="memorycard">
+                            <div class="front border rounded" id="front">
+                                <img src="../imgs/MemoryCardPattern.png" id="pattern">
+                            </div>
+                            <div class="back rounded border" id="back">
+                                <div>
+                                    <p>{{ card.definition }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div v-for="card in terms" class="col-auto mb-3 flip-container" id="cardbox" v-bind:key="card.cardId"
-                    :class="{ 'flipped': card.isFlipped }" v-on:click="flipCard(card)">
-                    <div class="memorycard">
-                        <div class="front border rounded shadow cardcontainer" id="front">
-                            <img width="100" height="150" src="../imgs/MemoryCardPattern.png">
-                        </div>
-                        <div class="back rounded border cardcontainer" id="back">
-                            <div width="100" height="150">
-                                <p>{{ card.term }}</p>
+                <h1 id="term-header">Terms</h1>
+                <div id="term-cardbox">
+                    <div v-for="card in terms" class="flip-container cardbox" v-bind:key="card.cardId"
+                        :class="{ 'flipped': card.isFlipped, 'matched': card.isMatched }" v-on:click="flipCard(card)">
+                        <div class="memorycard">
+                            <div class="front border rounded shadow" id="front">
+                                <img id="pattern" src="../imgs/MemoryCardPattern.png">
+                            </div>
+                            <div class="back rounded border" id="back">
+                                <div>
+                                    <p>{{ card.term }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </template>
 
@@ -47,12 +58,19 @@ export default {
             definitions: [],
             terms: [],
             allCards: [],
-            flippedCards: []
+            flippedCards: [],
+            finish: false,
+            start: false,
+            turns: 0,
+            totalTime: {
+                minutes: 0,
+                seconds: 0
+            }
         }
     },
     created() {
 
-        /**Shuffle cards and put into allCards */
+        /**Shuffle and split cards */
         this.allCards = this.shuffle(this.cards);
         for (let i = 0; i < this.allCards.length; i++) {
             this.definitions.push(this.allCards[i]);
@@ -73,6 +91,20 @@ export default {
         this.definitions = this.shuffle(this.definitions)
         this.terms = this.shuffle(this.terms)
     },
+    computed: {
+        sec() {
+            if (this.totalTime.seconds < 10) {
+                return '0' + this.totalTime.seconds;
+            }
+            return this.totalTime.seconds;
+        },
+        min() {
+            if (this.totalTime.minutes < 10) {
+                return '0' + this.totalTime.minutes;
+            }
+            return this.totalTime.minutes;
+        }
+    },
     methods: {
         shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -82,70 +114,160 @@ export default {
             return array;
         },
         flipCard(card) {
-            /**  */
-            if (card.isMatched) {
-                card.isFlipped=true;
-            }
-            else if (card.isMatched == false && card.isFlipped == false) {
-                card.isFlipped = true;
-                if (this.flippedCards.length < 2) {
-                    this.flippedCards.push(card);
-                }
-                else if (this.flippedCards.length === 2) {
-                    this._match(card);
-                }
-            }
-            else if (card.isMatched == false && card.isFlipped == true) {
-                card.isFlipped = false;
-                if (this.flippedCards.length < 2) {
-                    this.flippedCards.push(card);
-                }
-                else if (this.flippedCards.length === 2) {
-                    this._match(card);
-                }
+            if (card.isMatched || card.isFlipped || this.flippedCards.length === 2) {
+                return;
             }
 
+            if (!this.start) {
+                this._startGame();
+            }
+
+            card.isFlipped = true;
+
+            if (this.flippedCards.length < 2) {
+                this.flippedCards.push(card);
+            }
+            if (this.flippedCards.length === 2) {
+                this._match(card);
+            }
 
 
         },
         _match(card) {
-            if (this.flippedCards[0].cardId == card.cardId) {
-                this.flippedCards[0].isMatched = true;
-                card.isMatched = true;
+            this.turns++;
+            if (this.flippedCards[0].cardId === this.flippedCards[1].cardId) {
+                setTimeout(() => {
+                    this.flippedCards.forEach(card => card.isMatched = true);
+                    this.flippedCards = [];
+
+                    if (this.definitions.every(card => card.isMatched === true) && this.terms.every(card => card.isMatched === true)) {
+                        clearInterval(this.interval);
+                        this.finish = true;
+                    }
+                }, 400);
             }
             else {
-                this.flippedCards[0].isFlipped = false;
-                card.isFlipped = false;
+                setTimeout(() => {
+                    this.flippedCards.forEach((card) => { card.isFlipped = false });
+                    this.flippedCards = [];
+                }, 800);
+            }
+        },
+        _startGame() {
+            this._tick();
+            this.interval = setInterval(this._tick, 1000);
+            this.start = true;
+        },
+
+        _tick() {
+            if (this.totalTime.seconds !== 59) {
+                this.totalTime.seconds++;
+                return
             }
 
-            this.flippedCards = [];
-        }
+            this.totalTime.minutes++;
+            this.totalTime.seconds = 0;
+        },
+        reset() {
+            clearInterval(this.interval);
+
+            this.allCards = [];
+            this.terms = [];
+            this.definitions = [];
+            this.allCards = this.shuffle(this.cards);
+            for (let i = 0; i < this.allCards.length; i++) {
+                this.definitions.push(this.allCards[i]);
+                this.terms.push(Object.assign({}, this.allCards[i]));
+            }
+
+            this.definitions.forEach((card) => {
+                card.isFlipped = false;
+                card.isMatched = false;
+            });
+            this.terms.forEach((card) => {
+                card.isFlipped = false;
+                card.isMatched = false;
+            });
+
+            setTimeout(() => {
+                this.totalTime.minutes = 0;
+                this.totalTime.seconds = 0;
+                this.start = false;
+                this.finish = false;
+                this.turns = 0;
+                this.flippedCards = [];
+
+            }, 600);
+
+            this.definitions = this.shuffle(this.definitions)
+            this.terms = this.shuffle(this.terms)
+        },
     }
 }
 </script>
 
 
 <style>
+#term-header, #definition-header{
+    justify-content: center;
+}
+
+#term-cardbox {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#definition-cardbox {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+#front img {
+    background-size: cover;
+    max-width: 100%;
+}
+
+.matched {
+    opacity: 0.3;
+}
+
 .allcards {
     display: flex;
     flex-wrap: wrap;
-    padding: 2rem;
+    padding: 1rem;
+    justify-content: center;
 }
 
-#cardbox {
-    max-height: 3rem;
-    max-width: 10rem;
-    padding: 2rem;
+.cardbox {
+    padding: 1rem;
 }
+
 
 #front {
     border: solid #4c4e40;
-    border-radius: 0.5rem;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 12rem;
+    height: 10rem;
+    background-size: contain;
+    background-color: #ffe8d6;
 }
 
 #back {
-    border: solid;
-    border-radius: 0.5rem;
+    border: solid #4c4e40;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 100%;
+    width: 12rem;
+    height: 10rem;
+    background-color: #ffe8d6;
 }
 
 /** Below is the CSS for making memory cards flip 
