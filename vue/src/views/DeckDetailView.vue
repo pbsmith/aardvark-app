@@ -6,8 +6,8 @@
         <button class="form-button" v-if="!isFormDisplayed" v-on:click="displayForm">Create Card</button>
         <button class="form-button" v-if="isFormDisplayed" v-on:click="cancelForm">Cancel</button>
         <button class="form-button" v-on:click="editDeck">Edit Deck</button>
+        <button class="form-button" v-on:click="addCardsView">Manage Cards</button>
         <button class="form-button" v-on:click="beginStudySession">Begin Study Session</button>
-        <button class="form-button" v-on:click="addCardsView">Manage cards</button>
         <button class="form-button" v-on:click="matchingGame">Matching Game</button>
         <button class="form-button" v-on:click="raceGame">Race Game</button>
     </div>
