@@ -56,7 +56,11 @@ INSERT INTO users (username, password_hash, salt, user_role) VALUES ('admin','Yh
 INSERT INTO decks (deck_title, deck_tags, deck_desc, user_id) 
 	VALUES ('Spanish greetings', 'Spanish', 'learn Spanish greetings with Sara', 1),
 	('C# Basics', 'C#', 'learn the basics of the C# language', 2),
-	('Circulatory System', 'Anatomy', 'learn about the circulatory system with Abdi', 1)
+	('Circulatory System', 'Anatomy', 'learn about the circulatory system with Abdi', 1),
+	('French greetings', 'French', 'learn French with Sara',1),
+	('Exercise Basics', 'Physiology', 'learn the basics of exercising with Pendle',1),
+	('Manchester United', 'Soccer', 'learn about the miserable state of Manchester United with Abdi', 1),
+	('John Facts','Computer Science','learn John facts with Sara', 1)
 
 INSERT INTO cards (term, definition, user_id)
 	VALUES ('Hola', 'Hello', 1),
@@ -64,7 +68,7 @@ INSERT INTO cards (term, definition, user_id)
 	('Buenos días', 'Good Morning', 1),
 	('Buenas noches', 'Good Night', 1),
 	('Adiós', 'Goodbye (Farewell)', 1),
-	('Hasta luego', 'Goodbye (Bye)', 1),
+	('Hasta luego', 'See you later', 1),
 	('Qué gusto de verlo', 'What a pleasure to see you', 1),
 	('Qué pasa', 'Whats up', 1),
 	('Snake case','all lower case, underscore instead of spaces, no special characters',2),
@@ -92,8 +96,14 @@ INSERT INTO cards (term, definition, user_id)
 	('Ischemic response','Results from high carbon dioxide or low pH, increases peripheral resistance.',1),
 	('Net filtration','Force responsible for moving fluid across capillary walls',1),
 	('Artery','Muscular-walled tubes forming part of the circulation system by which oxygenated blood is conveyed',1),
-	('Vein','tubes forming part of the blood circulation system of the body, carrying in most cases oxygen-depleted blood toward the heart',1)
-
+	('Vein','tubes forming part of the blood circulation system of the body, carrying in most cases oxygen-depleted blood toward the heart',1),
+	('Cómo estás', 'How are you', 1),
+	('Hasta mañana', 'See you tommorow',1),
+	('Var' ,'_____ is the devil. _____ is raisins to me.',1),
+	('ToString()','_____ is my old drinking buddy',1),
+	('REST','_____ is the wild west.',1),
+	('watermelon','I try to avoid talking about religion, politics, and _____',1)
+	
 
 
 
@@ -136,7 +146,11 @@ INSERT INTO cardxdeck (card_id, deck_id)
 	(31,3),
 	(32,3),
 	(33,3),
-	(34,3)
+	(34,3),
+	(37,7),
+	(38,7),
+	(39,7),
+	(40,7)
 
 
 

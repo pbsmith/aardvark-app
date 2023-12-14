@@ -6,6 +6,7 @@
             <div><span class="form-button-mock">Total Time : <span class="badge"
                         :class="finish ? 'badge-success' : 'badge-light'">{{ min }} : {{ sec }}</span></span></div>
             <div><button class="form-button" @click="reset" :disabled="!start">Restart</button></div>
+            <button class="form-button"><router-link :to="{ name: 'deck-detail' }">Back to Deck</router-link></button>
         </div>
         <div class="allcards">
             <div id="terms-width">
@@ -50,9 +51,10 @@
         </div>
     </div>
     <div v-if="this.finish == true" id="finish-popup">
-        <div class="turns-final"><span>Turns : <span>{{turns }}</span> </span></div>
+        <div class="turns-final"><span>Turns : <span>{{ turns }}</span> </span></div>
         <div class="time-final"><span>Total Time : <span>{{ min }} : {{ sec }}</span></span></div>
         <div><button class="form-button reset-button" @click="reset" :disabled="!start">Restart</button></div>
+        <button class="form-button"><router-link :to="{ name: 'deck-detail' }">Back to Deck</router-link></button>
     </div>
 </template>
 
@@ -220,12 +222,14 @@ export default {
 
 
 <style>
+
 .turns-final {
     height: 5rem;
     justify-content: center;
     align-items: center;
     text-align: center;
     margin-top: 5rem;
+    font-size: xx-large;
 }
 
 .time-final {
@@ -233,6 +237,7 @@ export default {
     justify-content: center;
     align-items: center;
     text-align: center;
+    font-size: xx-large;
 }
 
 .reset-button {
@@ -259,6 +264,10 @@ export default {
     border-radius: 1rem;
     box-shadow: 0 0 1rem #2D1800;
     color: #E5AC65;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
 }
 
 .vertical-line {
