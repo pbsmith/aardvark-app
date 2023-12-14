@@ -1,24 +1,29 @@
 <template>
-    <div>
-        <h1>Current Deck</h1>
-        <button class="form-button" v-on:click="save()">Save</button>
-        <draggable id="draggable" v-model="currentCards" tag="ul" group="meals" item-key="card.cardId">
-            <template #item="{ element: card }">
-                <li class="cardcontainer">
-                    <p>{{ card.term }}</p>
-                    <p>{{ card.definition }}</p>
-                </li>
-            </template>
-        </draggable>
-        <h1>All Available Cards</h1>
-        <draggable v-model="allCards" tag="ul" group="meals" item-key="card.cardId">
-            <template #item="{ element: card }">
-                <li class="cardcontainer">
-                    <p>{{ card.term }}</p>
-                    <p>{{ card.definition }}</p>
-                </li>
-            </template>
-        </draggable>
+    <button class="form-button" v-on:click="save()">Save</button>
+    <div id="modify-deck-container">
+        <div id="current-deck-container">
+            <h1>Current Deck</h1>
+            <draggable class="scroll" id="draggable" v-model="currentCards" tag="ul" group="meals" item-key="card.cardId">
+                <template #item="{ element: card }">
+                    <li class="cardcontainer">
+                        <p>{{ card.term }}</p>
+                        <p>{{ card.definition }}</p>
+                    </li>
+                </template>
+            </draggable>
+        </div>
+
+        <div id="all-cards-container">
+            <h1>All Cards</h1>
+            <draggable class="scroll" v-model="allCards" tag="ul" group="meals" item-key="card.cardId">
+                <template #item="{ element: card }">
+                    <li class="cardcontainer">
+                        <p>{{ card.term }}</p>
+                        <p>{{ card.definition }}</p>
+                    </li>
+                </template>
+            </draggable>
+        </div>
     </div>
 </template>
 
@@ -75,7 +80,11 @@ export default {
 
                     allCards.value = temp.value.filter((card) => {
                         /** add all cards not in the currentdeck */
-                        return !currentCardIds.some(cardId => cardId === card.cardId);
+                        if (currentCardIds.some(cardId => cardId === card.cardId)){
+                            return false
+                        }else{
+                            return true
+                        }
                     })
                 })
                 .catch((error) => {
@@ -147,10 +156,67 @@ export default {
 </script>
 
 <style>
+
+/** todo: Conditional Styling for size less than 530px*/
+
+
+#modify-deck-container .cardcontainer {
+    max-width: 30vw;
+}
+
 .cards {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     justify-content: space-around;
+}
+
+ul {
+    list-style: none;
+}
+
+#modify-deck-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#current-deck-container {
+    max-width: 50vw;
+    margin: 1rem;
+}
+
+#all-cards-container {
+    margin: 1rem;
+    max-width: 50vw;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 1rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #E5AC65;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #643102;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #753B00;
+}
+
+.scroll {
+    display: block;
+    padding: .1rem;
+    margin-top: 1rem;
+    width: fit-content;
+    height: 55vh;
+    overflow-y: scroll;
 }
 </style>

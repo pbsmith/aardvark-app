@@ -12,11 +12,13 @@
                     v-if="isFormDisplayed && isEditPage">Cancel</button>
             </div>
             <div id="delete-button">
-                <button class="form-button" id="card-editBtn" v-on:click="deleteCard" v-if="isEditPage && !isDeleting">Delete</button>
-                <button class="form-button" id="card-editBtn" v-on:click="deleteCard" v-if="isEditPage && isDeleting">Cancel Delete</button>
+                <button class="form-button" id="card-editBtn" v-on:click="deleteCard"
+                    v-if="isEditPage && !isDeleting">Delete</button>
+                <button class="form-button" id="card-cancelBtn" v-on:click="deleteCard" v-if="isEditPage && isDeleting">Cancel
+                    Delete</button>
             </div>
         </div>
-        <DeleteConfirmation class="cardcontainer" v-if="isDeleting" v-bind:card="currentCard"/>
+        <DeleteConfirmation class="cardcontainer" v-if="isDeleting" v-bind:card="currentCard" />
     </div>
     <CardForm v-if="isFormDisplayed" v-bind:card="currentCard" />
 </template>
@@ -30,7 +32,7 @@ export default {
         return {
             isFormDisplayed: false,
             isDeleting: false,
-            
+
         }
     },
     computed: {
@@ -66,15 +68,26 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    
+
 }
 
 #card-details-term {
-    justify-content: left;
     margin-right: 2rem;
+    width: 6rem;
 }
 
 #card-details-definition {
-    justify-content: right;
+    display: flex;
+    text-align: right;
 }
+
+#card-edit-buttons {
+    display: flex;
+}
+
+#card-editBtn {
+    margin: .25rem;
+}
+
+
 </style>

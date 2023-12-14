@@ -1,60 +1,74 @@
 <template>
-    <h1>Card Race</h1>
-    <!--Display an error instead of game if not enough cards-->
-    <button id="exit-race-button" class="form-button" v-on:click="returnToDetails">Exit Game</button>
-    <div v-if="!isPlayable">
-        <h2>Your deck must contain at least 10 cards to play this game. Please add more cards and try again.</h2>
-    </div>
+    <div id="card-race-all">
 
-    <!--Display game if enough cards-->
-    <div v-if="isPlayable && !isOutOfCards" class="race-container">
-        <h2>Score: {{ cardsCorrect }}/{{ totalCards }}</h2>
-        <div class="termCard">
-            <h2>Current Card</h2>
-            <div id="race-correct-card" class="cardcontainer">
-                {{ correctCard.term }}
-                {{ correctCard.cardId }}
-            </div>
+
+        <h1>Card Race</h1>
+        <!--Display an error instead of game if not enough cards-->
+        <button id="exit-race-button" class="form-button" v-on:click="returnToDetails">Exit Game</button>
+        <div v-if="!isPlayable">
+            <h2>Your deck must contain at least 10 cards to play this game. Please add more cards and try again.</h2>
         </div>
 
-        <div id="popup-container" v-if="isAnswerWrong || isAnswerRight">
-            <div class="popUp" v-if="isAnswerWrong">
-                <span>Oops!</span>
+        <!--Display game if enough cards-->
+        <div v-if="isPlayable && !isOutOfCards" class="race-container">
+            <div class="h-container">
+                <h2>Score: {{ cardsCorrect }}/{{ totalCards }}</h2>
             </div>
-            <div class="popUp" v-if="isAnswerRight">
-                <span>Got it! +1</span>
-            </div>
-        </div>
 
-        <div>
-            <h2 class="card-race-h2">Definitions</h2>
-            <div v-if="!isAnswerRight && !isAnswerWrong" class="possible-definitions slide">
-                <div class="cardcontainer race-definitions" v-on:click="checkAnswer(card)" v-for="card in roundCards"
-                    v-bind:key="card.cardId">
-                    {{ card.definition }}
-                    {{ card.cardId }}
+            <div class="termCard">
+                <div class="h-container">
+                    <h2>Current Card</h2>
+                </div>
+                <div id="race-correct-card" class="cardcontainer">
+                    {{ correctCard.term }}
+                </div>
+            </div>
+
+            <div id="popup-container" v-if="isAnswerWrong || isAnswerRight">
+                <div class="popUp" v-if="isAnswerWrong">
+                    <span>Oops!</span>
+                </div>
+                <div class="popUp" v-if="isAnswerRight">
+                    <span>Got it! +1</span>
+                </div>
+            </div>
+            <div class="h-container">
+                <h2 class="card-race-h2">
+                    Definitions
+                </h2>
+            </div>
+            <div id="definitions-container">
+
+                <div v-bind:class="{ 'begin-slide': startslide }">
+                    <div v-if="!isAnswerRight && !isAnswerWrong" class="possible-definitions">
+                        <div class="cardcontainer race-definitions" v-on:click="checkAnswer(card)"
+                            v-for="card in roundCards" v-bind:key="card.cardId">
+                            {{ card.definition }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div v-if="isOutOfCards">
-        <button class="form-button" v-on:click="returnToDetails">Return to Deck Details</button>
-        <h3>Results:</h3>
-        <div v-if="cardsWrong.length > 0">
-            <p>You missed the following cards:</p>
-            <div class="cardcontainer" v-for="card in cardsWrong" v-bind:key="card.cardId">
-                <p>
-                    {{ card.term }}
-                </p>
-                <p>
-                    {{ card.definition }}
-                </p>
-            </div>
-        </div>
-        <div v-else>
-            <p>Great Job! You got all the cards right!</p>
-        </div>
+        <div v-if="isOutOfCards">
+            <button class="form-button" v-on:click="returnToDetails">Return to Deck Details</button>
 
+            <h3 class="h-container">Results:</h3>
+            <div v-if="cardsWrong.length > 0">
+                <p class="h-container">You missed the following cards:</p>
+                <div class="cardcontainer" v-for="card in cardsWrong" v-bind:key="card.cardId">
+                    <p>
+                        {{ card.term }}
+                    </p>
+                    <p>
+                        {{ card.definition }}
+                    </p>
+                </div>
+            </div>
+            <div v-else>
+                <p>Great Job! You got all the cards right!</p>
+            </div>
+
+        </div>
     </div>
 </template>
 
@@ -65,6 +79,7 @@
  * add game ending
  * add cancel button
  */
+import { onMounted } from 'vue';
 import CardService from '../services/CardService';
 import _ from 'lodash';
 
@@ -83,24 +98,27 @@ export default {
             cardsCorrect: 0,
             isAnswerWrong: false,
             isAnswerRight: false,
+            startslide: false,
+            myTimeout: 0,
         }
     },
     methods: {
         checkAnswer(card) {
+
             if (card.cardId == this.correctCard.cardId) {
                 this.canClick = false,
                     this.cardsCorrect++;
                 this.isAnswerRight = true;
-
-                setTimeout(() => { this.getRoundCards() }, 1000)
                 setTimeout(() => { this.isAnswerRight = false }, 1000)
+                setTimeout(() => { this.getRoundCards() }, 1000)
             }
             else {
                 this.cardsWrong.push(this.correctCard);
                 this.isAnswerWrong = true;
                 /** todo: implement try again */
-                setTimeout(() => { this.getRoundCards() }, 1500)
                 setTimeout(() => { this.isAnswerWrong = false }, 1500)
+                setTimeout(() => { this.getRoundCards() }, 1500)
+
             }
             console.log('in check answer', this.cardsWrong)
         },
@@ -131,6 +149,8 @@ export default {
         /** add 4 cards to the round cards
              *  remove the card being tested from the card list */
         getRoundCards() {
+            clearTimeout(this.myTimeout);
+            this.startslide = false;
             let counter = 0;
             if (this.cardsToTest.length > 0) {
                 this.roundCards = [];
@@ -149,11 +169,20 @@ export default {
                     index++;
                 }
                 this.roundCards = _.shuffle(this.roundCards);
+                setTimeout(() => { this.startslide = true }, 500)
+                this.timeoutRound();
             }
             else {
                 //** add method to end game */
                 this.isOutOfCards = true;
             }
+        },
+        timeoutRound() {
+            this.myTimeout = setTimeout(() => {
+                const card = {};
+                card.cardId = -1;
+                this.checkAnswer(card);
+            }, 10000)
         },
         returnToDetails() {
             this.$router.push({ name: 'deck-detail', params: { deckId: this.$route.params.deckId } })
@@ -161,7 +190,7 @@ export default {
     },
     created() {
         this.gameSetup();
-    }
+    },
 }
 </script>
 
@@ -172,15 +201,34 @@ export default {
     display: flex;
     cursor: pointer;
     padding: .5rem 1rem .5rem 1rem;
-    background-color: #b7b7a4;
+    background-color: #FF9233;
 
     border-radius: .5rem;
-    border: .05rem solid #b7b7a4;
-    box-shadow: 0 0 .25rem #4c4e40;
+    border: .05rem solid #C4782A;
+    box-shadow: 0 0 .25rem #C4782A;
+    color: #1C0B00;
 }
 
 .popUp {
     font-size: xx-large;
+}
+
+.h-container {
+    background-color: rgb(229, 172, 101, 0.4);
+    box-shadow: 0 0 .8rem rgb(229, 172, 101, 0.8);
+    width: fit-content;
+    border-radius: .5rem;
+}
+
+#race-game-all>h2,
+h3 {
+    padding: .1rem;
+    color: black;
+}
+
+#definitions-container {
+    display: flex;
+
 }
 
 .possible-definitions {
@@ -191,6 +239,7 @@ export default {
 
 .race-definitions {
     width: 10rem;
+    padding: 1rem;
 }
 
 #race-correct-card {
@@ -199,11 +248,9 @@ export default {
 }
 
 /** Card Movement */
-.slide:is() {
-    transform: translateX(10rem);
-}
 
-.slide {
-    transition: all 1.5s linear;
+.begin-slide {
+    transition: transform 15s linear;
+    transform: translateX(75vw);
 }
 </style>

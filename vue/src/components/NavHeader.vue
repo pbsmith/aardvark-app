@@ -17,8 +17,9 @@
                 </li>
             </div>
             <div id="nav-bar-right">
-                <li class="button"><router-link class="link" :to="{ name: 'about' }">About</router-link></li>
-                <li class="button"><router-link class="link" :to="{ name: 'contact' }">Contact</router-link></li>
+                <li id="about" class="button"><router-link class="link" :to="{ name: 'about' }">About</router-link></li>
+                <li id="contact" class="button"><router-link class="link" :to="{ name: 'contact' }">Contact</router-link></li>
+
                 <li id="add-button" class="button">
                     <router-link v-bind:to="{ name: 'newdeck' }">
                         <img src="../imgs/formImg.png" width="24" height="24">
@@ -109,7 +110,7 @@ a {
 /** Conditional Displays */
 
 /** 20rem = 320px */
-@media only screen and (max-width: 20rem) {
+@media only screen and (max-width: 19.9rem) {
     #nav-bar-ul {
         display: flex;
         flex-direction: column;
@@ -172,8 +173,8 @@ a {
 
 }
 
-/**  42.5rem = 680px, 20rem = 320px */
-@media only screen and (max-width: 42.5rem) and (min-width:20rem) {
+/**  41.9rem = 670px, 20rem = 320px */
+@media only screen and (max-width: 41.9rem) and (min-width:20rem) {
     #nav-bar-ul {
         display: grid;
         grid-template-columns: 1fr .25fr;
@@ -192,15 +193,6 @@ a {
             "logo title title"
             "logo search-bar search-bar";
         grid-column-gap: 1.5rem;
-    }
-
-    #nav-bar-right {
-        grid-area: nav-bar-right;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 1rem;
     }
 
     #logo {
@@ -225,6 +217,92 @@ a {
         width: 80%;
     }
 
+    #nav-bar-right {
+        grid-area: nav-bar-right;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+            "about contact"
+            "add-button login";
+    }
+
+    #add-button {
+        grid-area: add-button;
+    }
+
+    #login {
+        grid-area: login;
+    }
+
+    #about {
+        grid-area: about;
+    }
+
+    #contact {
+        grid-area: contact;
+    }
+
+    .button {
+        font-size: small;
+    }
+
+}
+
+/** 60rem = 960px,  42rem = 672px */
+@media only screen and (max-width:59.9rem) and (min-width:42rem) {
+    #nav-bar-ul {
+        display: grid;
+        grid-template-columns: 1fr .25fr;
+        grid-template-areas:
+            "nav-bar-left nav-bar-right";
+        gap: .25rem;
+        margin: .5rem;
+        padding: .5rem;
+    }
+
+    #nav-bar-left {
+        grid-area: nav-bar-left;
+        display: grid;
+        grid-template-columns: .5fr 1fr 1fr;
+        grid-template-areas:
+            "logo title title"
+            "logo search-bar search-bar";
+        grid-column-gap: 1.5rem;
+    }
+
+    #nav-bar-right {
+        grid-area: nav-bar-right;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    #logo {
+        grid-area: logo;
+        align-self: center;
+        justify-self: center;
+    }
+
+    #logo-img {
+        width: 100%;
+        max-width: 4rem;
+    }
+
+    #title {
+        grid-area: title;
+    }
+
+    #search-bar {
+        grid-area: search-bar;
+        margin-bottom: .2rem;
+    }
+
+    #search-bar-input {
+        width: 90%;
+    }
+
     #add-button {
         grid-area: add-button;
     }
@@ -236,45 +314,10 @@ a {
     .button {
         font-size: small;
     }
-
 }
 
-/** 62rem = 992px,  42.5rem = 680px */
-@media only screen and (max-width:62rem) and (min-width:42.5rem) {
-    #nav-bar-ul {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        flex-wrap: nowrap;
-    }
-
-    #search-bar-input {
-        width: 100%;
-    }
-
-    #search-bar {
-        min-width: 25vw;
-    }
-
-    #nav-bar-left {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    #nav-bar-right {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 1rem;
-    }
-}
-
-/** 62rem = 992px */
-@media only screen and (min-width: 62rem) {
+/** 60rem = 960px */
+@media only screen and (min-width: 60rem) {
 
     #nav-bar-ul {
         display: flex;
@@ -306,5 +349,6 @@ a {
         justify-content: flex-end;
         gap: 1rem;
     }
+
 }
 </style>

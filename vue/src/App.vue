@@ -47,7 +47,6 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-
 }
 
 a {
@@ -163,7 +162,7 @@ form input {
 .cardcontainer {
   margin: auto;
   margin-top: .5rem;
-  padding: 0rem 1.2rem 1.2rem 1.2rem;
+  padding: 0rem 1.2rem .5rem 1.2rem;
   background-color: #1C0B00;
   width: 90%;
 
