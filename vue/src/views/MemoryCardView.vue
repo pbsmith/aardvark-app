@@ -1,6 +1,8 @@
 <template>
-    <div>
-        <button class="form-button" v-on:click="startGame" v-if="!isStarted">Start</button>
+    <div v-if="!isStarted" class="opening-popup" >
+        <h1>Matching Game</h1>
+        <button class="form-button" v-on:click="startGame">Start</button>
+        <button class="form-button"><router-link :to="{ name: 'deck-detail' }">Back to Deck</router-link></button>
     </div>
     <div>
         <MemoryCardGame v-if="isStarted" v-bind:cards="cards"/>
@@ -8,6 +10,7 @@
 </template>
 
 <script>
+import { RouterLink } from 'vue-router'
 import MemoryCardGame from '../components/MemoryCardGame.vue'
 import CardService from '../services/CardService'
 
@@ -19,8 +22,9 @@ export default {
         }
     },
     components: {
-        MemoryCardGame
-    },
+    MemoryCardGame,
+    RouterLink
+},
     created() {
         CardService
             .getCardsByDeckId(this.$route.params.deckId)
@@ -37,3 +41,21 @@ export default {
     }
 }
 </script>
+
+<style>
+.opening-popup {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #2D1800;
+    border-radius: .5rem;
+    border: .05rem solid #2D1800;
+    box-shadow: 0 0 .25rem #2D1800;
+    color: #E5AC65;
+    width: fit-content;
+    padding: 5rem;
+    margin: auto;
+}
+</style>

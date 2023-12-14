@@ -34,6 +34,10 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
     justify-content: space-around;
+    margin: 4rem
+}
+.deck {
+    margin: 2rem;
 }
 
 </style>
