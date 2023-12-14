@@ -1,5 +1,10 @@
 <template>
-    <button class="form-button" v-on:click="save()">Save</button>
+        <button class="form-button" v-on:click="save(); displayPopUp()">Save</button>
+        <button class="form-button"><router-link :to="{ name: 'deck-detail' }">Back to Deck</router-link></button>
+        <div id="save-popup" class="form-button" v-if="isSaved">
+            <span>Saved!</span>
+        </div>
+
     <div id="modify-deck-container">
         <div id="current-deck-container">
             <h1>Current Deck</h1>
@@ -53,6 +58,7 @@ export default {
         const currentCards = ref([]);
         const allCards = ref([]);
         const temp = ref([]);
+        let isSaved = ref([]);
 
         const fetchData = () => {
             CardService.getCardsByDeckId(deckId)
@@ -80,9 +86,9 @@ export default {
 
                     allCards.value = temp.value.filter((card) => {
                         /** add all cards not in the currentdeck */
-                        if (currentCardIds.some(cardId => cardId === card.cardId)){
+                        if (currentCardIds.some(cardId => cardId === card.cardId)) {
                             return false
-                        }else{
+                        } else {
                             return true
                         }
                     })
@@ -99,10 +105,6 @@ export default {
          * The draggable arrays must be accessed in order to save them
          */
         const save = () => {
-            console.log('inModifyDeck, currentCards', currentCards.value)
-            console.log('inModifyDeck, allCards', allCards.value)
-
-            console.log('inModifyDeck, save, oldDeck', oldDeck)
 
             /**filter cards in current cards,*/
             let cardsToAdd = currentCards.value.filter((card) => {
@@ -139,7 +141,6 @@ export default {
                 card.deckId = deckId
                 CardService.deleteCardFromDeck(card)
             });
-
         };
 
         onMounted(() => {
@@ -151,14 +152,36 @@ export default {
     components: {
         draggable,
     },
+    data() {
+        return {
+            isSaved: false,
+        }
+    },
+    methods: {
+        displayPopUp() {
+            this.isSaved = true;
+            
+            setTimeout(() => { this.isSaved = false }, 1000)
+        }
+    }
 };
 
 </script>
 
 <style>
+/**popUp Styling */
 
-/** todo: Conditional Styling for size less than 530px*/
-
+#save-popup {
+    position: absolute;
+    left: 1rem;
+    display: float;
+    background-color: #FF9233;
+    height: fit-content;
+    border-radius: .5rem;
+    border: .05rem solid #C4782A;
+    box-shadow: 0 0 .25rem #C4782A;
+    color: #1C0B00;
+}
 
 #modify-deck-container .cardcontainer {
     max-width: 30vw;
