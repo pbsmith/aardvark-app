@@ -27,9 +27,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="vertical-line"></div>
-
             <div id="definitions-width">
                 <h1 id="definition-header">Definitions</h1>
                 <div id="definition-cardbox">
@@ -223,6 +220,14 @@ export default {
 
 <style>
 
+#terms-width {
+    width: 50%;
+}
+
+#definitions-width {
+    width: 50%;
+}
+
 .turns-final {
     height: 5rem;
     justify-content: center;
@@ -270,6 +275,7 @@ export default {
     display: flex;
 }
 
+/** 
 .vertical-line {
     border-left: 0.25rem solid black;
     border-radius: 0.25rem;
@@ -278,6 +284,7 @@ export default {
     left: 50%;
     top: 20%;
 }
+*/
 
 #term-header,
 #definition-header {
