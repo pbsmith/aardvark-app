@@ -126,3 +126,9 @@ export default {
     }
 }
 </script>
+
+<style>
+#deck-form-container{
+    margin-top: 9rem;
+}
+</style>

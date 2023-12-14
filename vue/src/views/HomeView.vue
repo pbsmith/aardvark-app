@@ -6,6 +6,7 @@
     <h1 id="deck-title">Flashcard Decks</h1>
     <DeckList id="home-decklist" v-bind:decks="decks" />
   </div>
+  <img id="sittingaardvark" src="../imgs/SittingAardvark.PNG"/>
 </template>
 
 <script>
@@ -55,5 +56,12 @@ export default {
 /** This is for the hover highlight to only apply to DeckList in this View */
 #home-decklist > .deck > a > .deckcontainer:hover{
     background-color: #2D1800;
+}
+
+#sittingaardvark{
+  max-width: 10rem;
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
 }
 </style>

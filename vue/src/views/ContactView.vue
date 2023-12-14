@@ -46,13 +46,13 @@ export default {
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: black;
   text-align: center;
 }
 
 p {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   line-height: 1.6;
   color: black;
   text-align: center;
@@ -60,7 +60,7 @@ p {
 
 form {
   margin-top: 1.5rem;
-  max-width: 80%;
+  max-width: 40rem;
   justify-self: center;
 }
 

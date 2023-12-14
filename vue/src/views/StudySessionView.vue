@@ -1,28 +1,31 @@
 <template>
   <div v-if="!sessionCompleted" class="flashcard-view">
     <div class="nav">
-      <h1>FlashCard Study Session</h1>
-      <button class="finish-study" v-on:click="completeStudySession">Finish Study Session</button>
+      <h1>Flashcard Study Session</h1>
     </div>
+    <StudySession v-if="cards.length > 0" :currentCard="cards[currentIndex]" class="card" />
     <div class="card-container-view">
-      <StudySession v-if="cards.length > 0" :currentCard="cards[currentIndex]" class="card" />
       <div id="study-buttons">
         <button class="centered-button" @click="prevCard" :disabled="currentIndex === 0">
-          <i class="pi pi-arrow-circle-left" style="font-size: 10vw"></i>
+          <i class="pi pi-arrow-circle-left"></i>
         </button>
         <button class="wrong-Icon" @click="rightCard(cards[currentIndex])">
-          <i class="pi pi-check-circle" style="font-size: 10vw"></i>
+          <i class="pi pi-check-circle"></i>
         </button>
         <button class="right-Icon" @click="wrongCard(cards[currentIndex])">
-          <i class="pi pi-times" style="font-size: 10vw"></i>
+          <i class="pi pi-times"></i>
         </button>
         <button class="centered-button" @click="nextCard" :disabled="currentIndex === cards.length - 1">
-          <i class="pi pi-arrow-circle-right" style="font-size: 10vw"></i>
+          <i class="pi pi-arrow-circle-right"></i>
         </button>
       </div>
-
     </div>
   </div>
+  <div id="study-session-buttons">
+    <button class="form-button"><router-link :to="{ name: 'deck-detail' }">Back to Deck</router-link></button>
+    <button v-if="!sessionCompleted" class="form-button" v-on:click="completeStudySession">Finish Study Session</button>
+  </div>
+
   <div class="complete-study">
     <div v-if="sessionCompleted" class="complete-view">
       <h1>Complete Session</h1>
@@ -69,20 +72,32 @@ export default {
       this.currentIndex = Math.max(this.currentIndex - 1, 0);
     },
     rightCard(currentIndex) {
-      this.rightCards.push(currentIndex)
+
+      if (!this.rightCards.includes(currentIndex)) {
+        this.rightCards.push(currentIndex)
+      }
+      if (this.wrongCards.includes(currentIndex)) {
+        this.wrongCards.pop(currentIndex)
+      }
+
       this.currentIndex = Math.min(this.currentIndex + 1, this.cards.length - 1)
       console.log(currentIndex);
     },
     wrongCard(currentIndex) {
-      this.wrongCards.push(currentIndex)
+
+      if (!this.wrongCards.includes(currentIndex)) {
+        this.wrongCards.push(currentIndex)
+      }
+      if (this.rightCards.includes(currentIndex)) {
+        this.rightCards.pop(currentIndex)
+      }
+
       this.currentIndex = Math.min(this.currentIndex + 1, this.cards.length - 1)
       console.log(currentIndex);
     },
     score() {
-      const allCards = this.cards.length;
-      const answered = this.rightCards.length + this.wrongCards.length;
-      const score = ((answered / allCards) * 100)
-      console.log(allCards)
+      let score = ((this.rightCards.length / (this.rightCards.length + this.wrongCards.length)) * 100)
+      score = Math.round(score)
       return `${score}%`;
     },
 
@@ -109,8 +124,20 @@ export default {
   margin: 0.4rem;
 }
 
+.form-button {
+  align-items: center;
+  background-color: #1C0B00;
+}
+
+#study-session-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 .flashcard-view {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -136,20 +163,14 @@ export default {
   border: none;
   cursor: pointer;
   border-radius: .3rem;
+
+}
+
+i {
+  font-size: 6vw;
 }
 
 
-.finish-study {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #1C0B00;
-  color: #E5AC65;
-  border: none;
-  cursor: pointer;
-  border-radius: .5rem;
-  padding: 0 .5rem 0 .5rem;
-}
 
 .wrong-Icon,
 .right-Icon {
@@ -191,6 +212,7 @@ h1 {
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4);
   background-color: #1C0B00;
   width: 80%;
+  color: #E5AC65;
 }
 </style>
   
