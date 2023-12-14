@@ -9,7 +9,9 @@
       <input type="email" id="email" v-model="formData.email" required>
       <label for="message">Your Message:</label>
       <textarea id="message" v-model="formData.message" rows="4" required></textarea>
-      <button class="form-button" type="submit">Submit</button>
+      <router-link v-bind:to="{ name: 'home' }">
+        <button class="form-button" type="submit">Submit</button>
+      </router-link>
     </form>
   </div>
 </template>
