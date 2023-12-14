@@ -1,30 +1,33 @@
 <template>
   <div v-if="!sessionCompleted" class="flashcard-view">
     <div class="nav">
-      <h1>--FlashCard Study Session--</h1>
+      <h1>FlashCard Study Session</h1>
       <button class="finish-study" v-on:click="completeStudySession">Finish Study Session</button>
     </div>
     <div class="card-container-view">
       <StudySession v-if="cards.length > 0" :currentCard="cards[currentIndex]" class="card" />
-      <button class="centered-button" @click="prevCard" :disabled="currentIndex === 0">
-        <i class="pi pi-arrow-circle-left" style="font-size: 3rem"></i>
-      </button>
-      <button class="wrong-Icon" @click="rightCard(cards[currentIndex])">
-        <i class="pi pi-check-circle" style="font-size: 3rem"></i>
-      </button>
-      <button class="right-Icon" @click="wrongCard(cards[currentIndex])">
-        <i class="pi pi-times" style="font-size: 3rem"></i>
-      </button>
-      <button class="centered-button" @click="nextCard" :disabled="currentIndex === cards.length - 1">
-        <i class="pi pi-arrow-circle-right" style="font-size: 3rem"></i>
-      </button>
+      <div id="study-buttons">
+        <button class="centered-button" @click="prevCard" :disabled="currentIndex === 0">
+          <i class="pi pi-arrow-circle-left" style="font-size: 10vw"></i>
+        </button>
+        <button class="wrong-Icon" @click="rightCard(cards[currentIndex])">
+          <i class="pi pi-check-circle" style="font-size: 10vw"></i>
+        </button>
+        <button class="right-Icon" @click="wrongCard(cards[currentIndex])">
+          <i class="pi pi-times" style="font-size: 10vw"></i>
+        </button>
+        <button class="centered-button" @click="nextCard" :disabled="currentIndex === cards.length - 1">
+          <i class="pi pi-arrow-circle-right" style="font-size: 10vw"></i>
+        </button>
+      </div>
+
     </div>
   </div>
   <div class="complete-study">
     <div v-if="sessionCompleted" class="complete-view">
       <h1>Complete Session</h1>
       <div>
-        <h2>Score:     {{ score() }}</h2>
+        <h2>Score: {{ score() }}</h2>
       </div>
       <div>
         <h2>Right: {{ rightCards.length }}</h2>
@@ -78,7 +81,7 @@ export default {
     score() {
       const allCards = this.cards.length;
       const answered = this.rightCards.length + this.wrongCards.length;
-      const score = ((answered / allCards) * 100) 
+      const score = ((answered / allCards) * 100)
       console.log(allCards)
       return `${score}%`;
     },
@@ -128,34 +131,35 @@ export default {
   align-items: center;
   justify-content: center;
   padding: .5rem;
-  background-color: #6b705c;
-  color: #cb997e;
+  background-color: #1C0B00;
+  color: #E5AC65;
   border: none;
   cursor: pointer;
   border-radius: .3rem;
 }
 
-.card {}
 
 .finish-study {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #6b705c;
-  color: #cb997e;
+  background-color: #1C0B00;
+  color: #E5AC65;
   border: none;
   cursor: pointer;
   border-radius: .5rem;
+  padding: 0 .5rem 0 .5rem;
 }
 
 .wrong-Icon,
 .right-Icon {
+  width: fit-content;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: .5rem;
-  background-color: #6b705c;
-  color: #cb997e;
+  background-color: #1C0B00;
+  color: #E5AC65;
   border: none;
   cursor: pointer;
   border-radius: 5px;
@@ -170,14 +174,13 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80rem;
+  width: 80%;
   background-color: none;
 }
 
 .card {
-  margin-right: 50rem;
-  margin-left: 50rem;
-
+  width: 100%;
+  max-width: 50rem;
 }
 
 .complete-view {
@@ -186,8 +189,8 @@ h1 {
   align-items: center;
   flex-direction: column;
   box-shadow: 0 0px 10px rgba(0, 0, 0, 0.4);
-  background-color: #6b705c;
-  width: 80rem;
+  background-color: #1C0B00;
+  width: 80%;
 }
 </style>
   

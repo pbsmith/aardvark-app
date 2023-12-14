@@ -42,19 +42,19 @@ export default {
         },
         colorTextFront: {
             type: String,
-            default: 'black'
+            default: '#E5AC65'
         },
         colorTextBack: {
             type: String,
-            default: 'white'
+            default: '#E5AC65'
         },
         colorFront: {
             type: String,
-            default: '#6b705c'
+            default: '#1C0B00'
         },
         colorBack: {
             type: String,
-            default: '#6b705c'
+            default: '#643102'
         },
         footerFront: {
             type: String,
