@@ -352,8 +352,8 @@ export default {
     border: solid black;
     border-radius: 1rem;
     overflow: hidden;
-    width: 8rem;
-    height: 8rem;
+    width: 8vw;
+    height: 8vw;
     background-size: contain;
     background-color: #753B00;
     padding: 1rem;
@@ -369,8 +369,8 @@ export default {
     text-align: center;
     overflow: hidden;
     height: 100%;
-    width: 8rem;
-    height: 8rem;
+    width: 8vw;
+    height: 8vw;
     background-color: #ffe8d6;
     padding: 1rem;
     box-shadow: 0 0 .25rem black;
