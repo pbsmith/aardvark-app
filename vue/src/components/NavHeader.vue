@@ -109,8 +109,8 @@ a {
 
 /** Conditional Displays */
 
-/** 20rem = 320px */
-@media only screen and (max-width: 19.9rem) {
+/** 19.9rem = 320px */
+@media only screen and (max-width: 27.9rem) {
     #nav-bar-ul {
         display: flex;
         flex-direction: column;
@@ -119,10 +119,10 @@ a {
 
     #nav-bar-left {
         display: grid;
-        grid-template-columns: auto auto;
+        grid-template-columns: 1fr 3.5fr;
         grid-template-areas:
             "logo title"
-            "search-bar search-bar";
+            "logo search-bar";
     }
 
     #nav-bar-right {
@@ -152,7 +152,7 @@ a {
     #search-bar {
         grid-area: search-bar;
         margin-bottom: .2rem;
-        justify-self: center;
+        max-width: 95%;
     }
 
     #search-bar-input {
@@ -173,8 +173,8 @@ a {
 
 }
 
-/**  41.9rem = 670px, 20rem = 320px */
-@media only screen and (max-width: 41.9rem) and (min-width:20rem) {
+/**  41.9rem = 670px, 27.9rem = 320px */
+@media only screen and (max-width: 41.9rem) and (min-width:28rem) {
     #nav-bar-ul {
         display: grid;
         grid-template-columns: 1fr .25fr;
@@ -224,22 +224,33 @@ a {
         grid-template-areas: 
             "about contact"
             "add-button login";
+        gap: .25rem;
+        justify-content: center;
+        align-content: center;
     }
 
     #add-button {
         grid-area: add-button;
+        width: fit-content;
+        height: fit-content;
+        align-self: center;
     }
 
     #login {
         grid-area: login;
+        width: fit-content;
+        height: fit-content;
+        align-self: center;
     }
 
     #about {
         grid-area: about;
+        width: fit-content;
     }
 
     #contact {
         grid-area: contact;
+        width: fit-content;
     }
 
     .button {
