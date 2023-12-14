@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="this.finish == false">
         <div class="flex-top">
             <div><span class="form-button-mock">Turns : <span class="badge"
                         :class="finish ? 'badge-success' : 'badge-light'">{{ turns }}</span> </span></div>
@@ -7,23 +7,8 @@
                         :class="finish ? 'badge-success' : 'badge-light'">{{ min }} : {{ sec }}</span></span></div>
             <div><button class="form-button" @click="reset" :disabled="!start">Restart</button></div>
         </div>
-            <div class="allcards">
-                <h1 id="definition-header">Definitions</h1>
-                <div id="definition-cardbox">
-                    <div v-for="card in definitions" class="flip-container cardbox" v-bind:key="card.cardId"
-                        :class="{ 'flipped': card.isFlipped, 'matched': card.isMatched }" v-on:click="flipCard(card)">
-                        <div class="memorycard">
-                            <div class="front border rounded" id="front">
-                                <img src="../imgs/MemoryCardPattern.png" id="pattern">
-                            </div>
-                            <div class="back rounded border" id="back">
-                                <div>
-                                    <p>{{ card.definition }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="allcards">
+            <div id="terms-width">
                 <h1 id="term-header">Terms</h1>
                 <div id="term-cardbox">
                     <div v-for="card in terms" class="flip-container cardbox" v-bind:key="card.cardId"
@@ -41,6 +26,33 @@
                     </div>
                 </div>
             </div>
+
+            <div class="vertical-line"></div>
+
+            <div id="definitions-width">
+                <h1 id="definition-header">Definitions</h1>
+                <div id="definition-cardbox">
+                    <div v-for="card in definitions" class="flip-container cardbox" v-bind:key="card.cardId"
+                        :class="{ 'flipped': card.isFlipped, 'matched': card.isMatched }" v-on:click="flipCard(card)">
+                        <div class="memorycard">
+                            <div class="front border rounded" id="front">
+                                <img src="../imgs/MemoryCardPattern.png" id="pattern">
+                            </div>
+                            <div class="back rounded border" id="back">
+                                <div>
+                                    <p>{{ card.definition }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div v-if="this.finish == true" id="finish-popup">
+        <div class="turns-final"><span>Turns : <span>{{turns }}</span> </span></div>
+        <div class="time-final"><span>Total Time : <span>{{ min }} : {{ sec }}</span></span></div>
+        <div><button class="form-button reset-button" @click="reset" :disabled="!start">Restart</button></div>
     </div>
 </template>
 
@@ -208,38 +220,102 @@ export default {
 
 
 <style>
+.turns-final {
+    height: 5rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 5rem;
+}
+
+.time-final {
+    height: 5rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.reset-button {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.reset-button:hover { 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #753B00;
+
+}
+
+#finish-popup {
+    margin: auto;
+    margin-top: .5rem;
+    padding: 0rem 1.2rem 1.2rem 1.2rem;
+    background-color: #1C0B00;
+    width: 40%;
+    height: 30rem;
+    border: .05rem solid #2D1800;
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem #2D1800;
+    color: #E5AC65;
+}
+
+.vertical-line {
+    border-left: 0.25rem solid black;
+    border-radius: 0.25rem;
+    height: 40rem;
+    position: absolute;
+    left: 50%;
+    top: 20%;
+}
+
+#term-header,
+#definition-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #1C0B00;
+    color: #E5AC65;
+    box-shadow: 0 0 0.25rem #1C0B00;
+    height: 4rem;
+    margin-right: 15rem;
+    margin-left: 15rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+
 .flex-top {
     display: flex;
 }
 
 .form-button-mock {
     margin: 1rem 1rem .5rem 1rem;
-  padding: .5rem 1rem .5rem 1rem;
-  background-color: #b7b7a4;
-
-  border-radius: .5rem;
-  border: .05rem solid #b7b7a4;
-  box-shadow: 0 0 .25rem #4c4e40;
-}
-
-#term-header, #definition-header{
-    justify-content: center;
+    padding: .5rem 1rem .5rem 1rem;
+    color: #E5AC65;
+    background-color: #753B00;
+    border-radius: .5rem;
+    border: .05rem solid #2D1800;
+    box-shadow: 0 0 0.25rem #1C0B00;
 }
 
 #term-cardbox {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 #definition-cardbox {
     display: flex;
     flex-wrap: wrap;
-
+    justify-content: center;
 }
 
 #front img {
     background-size: cover;
     max-width: 100%;
+    background-color: #753B00;
 }
 
 .matched {
@@ -248,9 +324,7 @@ export default {
 
 .allcards {
     display: flex;
-    flex-wrap: wrap;
-    padding: 1rem;
-    justify-content: center;
+
 }
 
 .cardbox {
@@ -259,31 +333,31 @@ export default {
 
 
 #front {
-    border: solid #4c4e40;
+    border: solid black;
     border-radius: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     overflow: hidden;
-    width: 12rem;
-    height: 10rem;
+    width: 8rem;
+    height: 8rem;
     background-size: contain;
-    background-color: #ffe8d6;
+    background-color: #753B00;
     padding: 1rem;
+    box-shadow: 0 0 .25rem black;
 }
 
 #back {
-    border: solid #4c4e40;
+    border: solid black;
     border-radius: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     overflow: hidden;
     height: 100%;
-    width: 12rem;
-    height: 10rem;
+    width: 8rem;
+    height: 8rem;
     background-color: #ffe8d6;
     padding: 1rem;
+    box-shadow: 0 0 .25rem black;
 }
 
 /** Below is the CSS for making memory cards flip 
