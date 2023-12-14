@@ -4,7 +4,7 @@
 
         <h1>Card Race</h1>
         <!--Display an error instead of game if not enough cards-->
-        <button id="exit-race-button" class="form-button" v-on:click="returnToDetails">Exit Game</button>
+        <button id="exit-race-button" class="form-button" v-on:click="returnToDetails">Back to Deck</button>
         <div v-if="!isPlayable">
             <h2>Your deck must contain at least 10 cards to play this game. Please add more cards and try again.</h2>
         </div>
@@ -50,8 +50,6 @@
             </div>
         </div>
         <div v-if="isOutOfCards">
-            <button class="form-button" v-on:click="returnToDetails">Return to Deck Details</button>
-
             <h3 class="h-container">Results:</h3>
             <div v-if="cardsWrong.length > 0">
                 <p class="h-container">You missed the following cards:</p>
